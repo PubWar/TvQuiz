@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -32,10 +33,6 @@ class MainActivity : ComponentActivity() {
                     // Your composable content here
                     // This content will now extend behind the status bar
                     App()
-
-//                    prefs = remember {
-//                        createDataStore(applicationContext)
-//                    }
                 }
             }
         }

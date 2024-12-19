@@ -4,9 +4,14 @@ package com.pubwar.quiz.utills
 
 import com.pubwar.quiz.BuildKonfig.HEX_IV
 import com.pubwar.quiz.BuildKonfig.HEX_KEY
+import dev.whyoleg.cryptography.CryptographyAlgorithm
 import dev.whyoleg.cryptography.CryptographyProvider
 import dev.whyoleg.cryptography.DelicateCryptographyApi
+import dev.whyoleg.cryptography.algorithms.*
 import dev.whyoleg.cryptography.algorithms.symmetric.AES
+import kotlinx.serialization.json.Json
+import okio.ByteString.Companion.decodeBase64
+import okio.ByteString.Companion.decodeHex
 
 fun String.toCyrilic(): String {
     val latinToCyrillicMap = mapOf(
@@ -18,6 +23,7 @@ fun String.toCyrilic(): String {
         'D' to 'Д', 'd' to 'д',
         "Dž" to 'Џ', "dž" to 'џ',
         'Đ' to 'Ђ', 'đ' to 'ђ',
+        "Dj" to 'Ђ', "dj" to 'ђ',
         'E' to 'Е', 'e' to 'е',
         'F' to 'Ф', 'f' to 'ф',
         'G' to 'Г', 'g' to 'г',
@@ -39,7 +45,7 @@ fun String.toCyrilic(): String {
         'U' to 'У', 'u' to 'у',
         'V' to 'В', 'v' to 'в',
         'Z' to 'З', 'z' to 'з',
-        'Ž' to 'Ж', 'ž' to 'ж'
+        'Ž' to 'Ж', 'ž' to 'ж',
     )
 
 
@@ -84,7 +90,6 @@ suspend fun String.encrypt(): String
 
     // Configure AES-CBC
     val aesCbc = cryptography.get(AES.CBC)
-
     // Import AES key
     val decoder = aesCbc.keyDecoder()
     val key = decoder.decodeFrom(AES.Key.Format.RAW, HEX_KEY.toByteArray())
@@ -97,12 +102,13 @@ suspend fun String.encrypt(): String
     // Encrypt
     val ciphertext: ByteArray = cipher.encrypt(iv = HEX_IV.toByteArray(), plaintextInput = paddedPlaintext)
 
+
     return ciphertext.toHexString(HexFormat.UpperCase)
 }
 
 
 @OptIn(DelicateCryptographyApi::class)
-suspend fun String.decrypt() : String{
+suspend fun String.decryptString() : String{
     val ciphertext = this.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
     // Initialize Cryptography
     val cryptography = CryptographyProvider.Default
@@ -116,9 +122,16 @@ suspend fun String.decrypt() : String{
 
     // Decrypt the ciphertext
     val decryptedPaddedBytes = cipher.decrypt(HEX_IV.toByteArray(), ciphertext)
+
     return decryptedPaddedBytes.decodeToString()
 }
 
+
+suspend inline fun <reified T> String.decrypt() : T {
+    val jsonString = this.dropLast(1).drop(1).decryptString().replace("\n", "")
+    val cleanedJson = jsonString.trimStart('\uFEFF')
+    return Json.decodeFromString<T>(cleanedJson)
+}
 
 fun addPadding(data: ByteArray, blockSize: Int): ByteArray {
     val paddingSize = blockSize - (data.size % blockSize)

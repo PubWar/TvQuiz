@@ -5,4 +5,5 @@ import com.pubwar.quiz.core.domain.Result
 
 interface LoginRepository {
     suspend fun login(username: String, password: String): Result<Boolean, DataError.Remote>
+    suspend fun isLoggedIn(): Boolean
 }

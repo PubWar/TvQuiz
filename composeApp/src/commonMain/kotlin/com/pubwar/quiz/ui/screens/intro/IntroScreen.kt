@@ -13,17 +13,34 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.pubwar.quiz.getCurrentTime
+import com.pubwar.quiz.io.locale_data_source.LocalDataSource
 import com.pubwar.quiz.ui.components.ClickableTextWithUrl
 import com.pubwar.quiz.ui.components.RedButton
 import com.pubwar.quiz.ui.theme.Blue
+import com.pubwar.quiz.ui.view_models.IntroViewModel
+import com.pubwar.quiz.utills.toCyrilic
+import kotlinx.coroutines.flow.map
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import pubwartvquiz.composeapp.generated.resources.Res
 import pubwartvquiz.composeapp.generated.resources.hello
 import pubwartvquiz.composeapp.generated.resources.intro_info
@@ -34,8 +51,10 @@ import pubwartvquiz.composeapp.generated.resources.open_qr_scanner
 
 
 @Composable
-fun IntroScreen(navController: NavHostController)
+ fun IntroScreen(viewModel: IntroViewModel, navController: NavHostController)
 {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,13 +72,12 @@ fun IntroScreen(navController: NavHostController)
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Text(stringResource(Res.string.hello, "Ана"), style =  MaterialTheme.typography.subtitle1.copy(color = Blue, textAlign = TextAlign.Center))
+                Text(stringResource(Res.string.hello, state.username.toCyrilic()), style =  MaterialTheme.typography.subtitle1.copy(color = Blue, textAlign = TextAlign.Center))
                 Spacer(Modifier.height(12.dp))
                 Text(stringResource(Res.string.intro_subtitle1), style = MaterialTheme.typography.body1.copy(color = Blue, textAlign = TextAlign.Center))
                 Spacer(Modifier.height(12.dp))
                 Text(stringResource(Res.string.intro_subtitle2), style = MaterialTheme.typography.body1.copy(color = Blue, textAlign = TextAlign.Center))
             }
-
         }
 
         Spacer(Modifier.height(12.dp))
@@ -72,11 +90,24 @@ fun IntroScreen(navController: NavHostController)
         )
 
         Spacer(Modifier.weight(2F))
+
+
         RedButton(
             enabled = true,
-            text = stringResource(Res.string.open_qr_scanner),
+            text = if (state.activeQuiz) "Nastavi kviz" else stringResource(Res.string.open_qr_scanner),
             onClick = {
-                navController.navigate("/qrscanner")
+                if(state.activeQuiz)
+                {
+                    val exp = (getCurrentTime() - state.activeQuizStarted) + state.activeQuizExpired
+                    println("check time: ${getCurrentTime() - state.activeQuizStarted}")
+                    println("check time: ${(getCurrentTime() - state.activeQuizStarted)/1000}")
+                    println("check time: $exp")
+                     navController.navigate("/quiz/${exp}")
+                }
+                else
+                {
+                    navController.navigate("/qrscanner")
+                }
             },
         )
 

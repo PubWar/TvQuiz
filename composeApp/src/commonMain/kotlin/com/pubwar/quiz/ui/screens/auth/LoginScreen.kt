@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pubwar.quiz.ui.components.EditText
 import com.pubwar.quiz.ui.view_models.LoginViewModel
+import com.pubwar.quiz.utills.toCyrilic
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import pubwartvquiz.composeapp.generated.resources.Res
@@ -57,6 +58,7 @@ fun LoginScreen(viewModel: LoginViewModel, successLogin: () -> Unit) {
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+        Text("sta se ovde desava opet")
         Button(
             onClick = { coroutineScope.launch { viewModel.login() } },
             modifier = Modifier.fillMaxWidth(),

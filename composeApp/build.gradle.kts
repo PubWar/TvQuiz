@@ -86,6 +86,13 @@ kotlin {
 
             implementation(project.dependencies.platform("dev.whyoleg.cryptography:cryptography-bom:0.3.1"))
             implementation("dev.whyoleg.cryptography:cryptography-core")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+            implementation("dev.whyoleg.cryptography:cryptography-provider-openssl3-prebuilt")
+
         }
     }
 }

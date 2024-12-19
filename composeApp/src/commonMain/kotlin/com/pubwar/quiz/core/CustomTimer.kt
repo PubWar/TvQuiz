@@ -14,17 +14,23 @@ class Timer (
     private var timerJob: Job? = null
     private var isRunning: Boolean = false
 
-    fun start(expired: Int) {
+    fun start(expired: Long) {
         if (isRunning) return
         isRunning = true
         startTime = getCurrentTime()
         timerJob = coroutineScope.launch {
-            while (isRunning) {
-                val elapsed = getCurrentTime() - startTime
-                val currentTime = (elapsed / 1000).toInt() + expired
-                onTick(currentTime)
-                delay(1000L - (elapsed % 1000))
-            }
+//            try{
+                while (isRunning) {
+                    val elapsed = getCurrentTime() - startTime
+                    val currentTime = ((elapsed + expired) / 1000).toInt()
+                    onTick(currentTime)
+                    delay(1000L - (elapsed % 1000))
+                }
+//            } catch (e: Exception) {
+//                println("Coroutine failed: ${e.message}")
+//            }
+
+
         }
     }
     fun stop() {

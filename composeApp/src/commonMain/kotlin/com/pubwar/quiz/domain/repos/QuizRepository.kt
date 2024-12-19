@@ -7,4 +7,5 @@ import com.pubwar.quiz.domain.model.Game
 
 interface QuizRepository {
     suspend fun getQuiz(quizId: String) : Result<List<Game> , DataError.Remote>
+    suspend fun setCurrentQuiz(quizId: String, startTime: Long, expired: Long)
 }

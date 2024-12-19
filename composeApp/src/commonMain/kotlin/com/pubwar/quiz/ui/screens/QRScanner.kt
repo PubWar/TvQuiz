@@ -14,18 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import qrscanner.CameraLens
 import qrscanner.QrScanner
+
+
 
 @Composable
 fun QrScannerView(onScanned: (String) -> Unit) {
-
-
     Box(modifier = Modifier.fillMaxSize()) {
         // Camera Preview
         QrScanner(
             modifier = Modifier,
             flashlightOn = false,
-
+            cameraLens = CameraLens.Back,
             onCompletion = {
                 onScanned(it)
             },
@@ -39,10 +40,10 @@ fun QrScannerView(onScanned: (String) -> Unit) {
         )
 
         // QR Scanner Mask
-        QRScannerMask(
-            clearAreaSize = 250.dp,
-            borderColor = Color.White
-        )
+//        QRScannerMask(
+//            clearAreaSize = 250.dp,
+//            borderColor = Color.White
+//        )
     }
 
 }

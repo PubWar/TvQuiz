@@ -24,13 +24,13 @@ fun NonGameView() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        VideoPlayer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp),
-//            url = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            path = "test"
-        )
+//        VideoPlayer(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(400.dp),
+////            url = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+//            path = "test"
+//        )
 //        Image(
 //            painter = painterResource(Res.drawable.jelen_pivo),
 //            contentDescription = "reklama",

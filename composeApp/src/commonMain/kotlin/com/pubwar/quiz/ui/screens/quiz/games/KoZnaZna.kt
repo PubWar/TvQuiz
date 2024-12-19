@@ -64,15 +64,15 @@ fun KoZnaZna(koZnaZnaViewModel: KoZnaZnaViewModel, userFinished: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Oblast",
-                style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = Yellow)
-            )
-            Text(
-                text = "OPŠTA KULTURA",
-                style = MaterialTheme.typography.subtitle2.copy(textAlign = TextAlign.Center, color = Yellow)
-            )
-            Spacer(Modifier.height(42.dp))
+//            Text(
+//                text = "Oblast",
+//                style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = Yellow)
+//            )
+//            Text(
+//                text = "OPŠTA KULTURA",
+//                style = MaterialTheme.typography.subtitle2.copy(textAlign = TextAlign.Center, color = Yellow)
+//            )
+//            Spacer(Modifier.height(42.dp))
             Text(
                 text = "Preostalo vreme",
                 style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = LightBLue)

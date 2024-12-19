@@ -23,16 +23,20 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pubwar.quiz.domain.model.ViewType
 import com.pubwar.quiz.ui.screens.quiz.components.GameContent
 import com.pubwar.quiz.ui.screens.quiz.components.ShowInfoView
+import com.pubwar.quiz.ui.screens.quiz.components.Timers
 import com.pubwar.quiz.ui.screens.quiz.components.TotalPointsView
 import com.pubwar.quiz.ui.theme.ButtonColor
 import com.pubwar.quiz.ui.theme.Yellow
 import com.pubwar.quiz.ui.view_models.QuizViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import pubwartvquiz.composeapp.generated.resources.Res
 import pubwartvquiz.composeapp.generated.resources.*
 
@@ -42,6 +46,7 @@ fun Quiz(quizViewModel: QuizViewModel) {
 
     val state by quizViewModel.state.collectAsStateWithLifecycle()
     val ranking by quizViewModel.ranking.collectAsStateWithLifecycle()
+    val time by quizViewModel.timeToNextGame.collectAsStateWithLifecycle()
 
     Column(
         Modifier
@@ -56,7 +61,18 @@ fun Quiz(quizViewModel: QuizViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (state.gameType != ViewType.KRAJ)
-                TotalPointsView(state.totalPoints)
+            {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(36.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TotalPointsView(state.totalPoints)
+                    Spacer(Modifier.weight(1F))
+                    Timers(quizViewModel, state.gameType)
+                }
+            }
 
             AnimatedVisibility(
                 visible = state.gameType in listOf(ViewType.REKLAME, ViewType.UVOD)

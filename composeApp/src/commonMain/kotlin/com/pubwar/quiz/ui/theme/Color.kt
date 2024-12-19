@@ -15,7 +15,8 @@ val CircleBlue : Color = Color(0XFF061B77)
 val Border : Color = Color(0xFFCDE1F1)
 
 //RTV Colors
-val TextColor : Color = Color(0xFF302F31)
+val TextColor : Color = Color(0xFFFFFFFF)
+val EditTextColor : Color = Color(0xFF000000)
 val Gray : Color = Color(0xFFDDDDDD)
 val BackgroundColor : Color = Color(0xFF02282C)
 val Yellow : Color = Color(0xFFFEDD14)

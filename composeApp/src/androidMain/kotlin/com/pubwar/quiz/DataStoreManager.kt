@@ -1,12 +1,14 @@
 package com.pubwar.quiz
 
 import android.content.Context
+import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.pubwar.quiz.io.DataStoreManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.util.prefs.Preferences
 
 class AndroidDataStoreManager(private val context: Context) : DataStoreManager {
     private val Context.dataStore by preferencesDataStore(name = "settings")

@@ -23,12 +23,6 @@ import pubwartvquiz.composeapp.generated.resources.profile_image
 @Composable
 fun TotalPointsView(totalPoints : Int)
 {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .height(36.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
         Row(
             Modifier
                 .background(Color.White, shape = RoundedCornerShape(18.dp)),
@@ -50,7 +44,4 @@ fun TotalPointsView(totalPoints : Int)
                 style = MaterialTheme.typography.subtitle2.copy(color = Color.Black)
             )
         }
-
-        Spacer(Modifier.weight(1F))
-    }
 }

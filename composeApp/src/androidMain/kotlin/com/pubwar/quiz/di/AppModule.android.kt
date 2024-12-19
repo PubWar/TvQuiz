@@ -11,5 +11,4 @@ actual val platformModule = module {
     single<HttpClientEngine> { OkHttp.create() }
     single { getPlatformDataManager(androidContext()) }
     single { getSpeechToTextManager(androidContext()) }
-
 }

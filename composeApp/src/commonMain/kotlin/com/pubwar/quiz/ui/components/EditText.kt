@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pubwar.quiz.ui.theme.AppGradients
+import com.pubwar.quiz.ui.theme.Blue
+import com.pubwar.quiz.ui.theme.EditTextColor
 import com.pubwar.quiz.ui.theme.PrimaryColor
 import com.pubwar.quiz.ui.theme.SecondaryColor
 import com.pubwar.quiz.ui.theme.TextColor
@@ -103,13 +105,13 @@ fun EditText(
 
     Box(
         modifier,
-        Alignment.Center
+        Alignment.CenterStart
 
     ) {
         TextField(
             textStyle = MaterialTheme.typography.subtitle2.copy(
-                color = TextColor,
-                textAlign = TextAlign.Center
+                color = EditTextColor,
+                textAlign = TextAlign.Start
             ),
 
             value = value,
@@ -123,14 +125,14 @@ fun EditText(
                     placeholder,
                     style = MaterialTheme.typography.subtitle2.copy(
                         color = Color(0xFFD3D3D4),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Start
                     )
                 )
             },
             colors = TextFieldDefaults.textFieldColors(
-                textColor = TextColor,
+                textColor = EditTextColor,
                 backgroundColor = Color.Transparent, // Transparent background
-                cursorColor = TextColor, // Cursor color
+                cursorColor = EditTextColor, // Cursor color
                 focusedIndicatorColor = Color.Transparent, // No underline when focused
                 unfocusedIndicatorColor = Color.Transparent, // No underline when unfocused
                 disabledIndicatorColor = Color.Transparent,
