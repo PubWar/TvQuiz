@@ -97,6 +97,11 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
                     color = LightBLue
                 )
             )
+
+            Text(
+                text = typeAnswerViewModel.questions[currentIndex].question,
+                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
+            )
         }
 
         Spacer(Modifier.weight(1f))

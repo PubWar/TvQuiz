@@ -2,10 +2,14 @@ package com.pubwar.quiz.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.pubwar.quiz.auth.FCMToken
+import com.pubwar.quiz.auth.PhoneAuth
 import com.pubwar.quiz.core.data.HttpClientFactory
 import com.pubwar.quiz.domain.repos.ActiveQuizRepo
 import com.pubwar.quiz.domain.repos.LoginRepository
 import com.pubwar.quiz.domain.repos.QuizRepository
+import com.pubwar.quiz.except_actual.getFCMToken
+import com.pubwar.quiz.except_actual.getPhoneAuth
 import com.pubwar.quiz.getPlatformDataManager
 import com.pubwar.quiz.io.locale_data_source.LocalDataSource
 import com.pubwar.quiz.io.locale_data_source.LocalDataSourceImpl
@@ -29,10 +33,13 @@ expect val platformModule: Module
 val appModule = module {
 
     single<DataStore<Preferences>>{ getPlatformDataManager(null) }
+    single<PhoneAuth>{getPhoneAuth()}
+    single<FCMToken>{ getFCMToken() }
 
     single { HttpClientFactory.create(get()) }
 
     singleOf(::LocalDataSourceImpl).bind<LocalDataSource>()
+
 
     singleOf(::RemoteDataSourceImpl).bind<RemoteDataSource>()
     singleOf(::QuizRepoImpl).bind<QuizRepository>()

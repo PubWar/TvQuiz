@@ -21,6 +21,7 @@ class QuizRepoImpl(
              {
                  return Result.Success(localQuiz.decrypt<QuizConfResponseDto>().games)
              }
+        println("da li ovde ima neki zaostali kviz: " + localQuiz.toString())
 
         return remoteDataSource
             .getQuizConfiguration(quizId)
@@ -35,4 +36,18 @@ class QuizRepoImpl(
         localDataSource.saveCurrentQuizStartTime(startTime)
         localDataSource.saveCurrentQuizExpiration(expired)
     }
+
+    override suspend fun sendResult(
+        gameId: Int,
+        points: Int,
+        answerInSecond: Int
+    ): Result<String, DataError.Remote> {
+        localDataSource.getAccessToken()?.let {
+            remoteDataSource.sendResult(it, localDataSource.getCurrentQuizId(), gameId, points, 10)
+
+        }
+        return Result.Success("Result sent")
+    }
+
+
 }

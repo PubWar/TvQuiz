@@ -1,0 +1,757 @@
+{
+  "quizId" : "86f56545-a1e7-40fe-b9c5-3113ea73e03f",
+
+
+  "games":[
+    {
+      "gameId": 1,
+      "viewType":"KO_ZNA_ZNA",
+      "start":10,
+      "end":20,
+      "questions":[
+        {
+          "question":"„STOJTE, GALIJE CARSKE” STIH JE IZ „PLAVE GROBNICE” KOJU JE NAPISAO KOJI NAŠ PESNIK?",
+          "answers":[
+            {
+              "answer":"STEVAN RAIČKOVIĆ",
+              "correct":false
+            },
+            {
+              "answer":"VLADISLAV PETKOVIĆ DIS",
+              "correct":false
+            },
+            {
+              "answer":"SIMA PANDUROVIĆ",
+              "correct":false
+            },
+            {
+              "answer":"MILUTIN BOJIĆ",
+              "correct":true
+            }
+          ],
+          "end":20
+        }
+      ]
+    },
+    {
+      "gameId": 2,
+      "viewType":"KO_ZNA_ZNA",
+      "start":20,
+      "end":30,
+      "questions":[
+        {
+          "question":"FRANCUZ MIŠEL FUKO OBELEŽIO JE 20. VEK NA POLJU...",
+          "answers":[
+            {
+              "answer":"PSIHOLOGIJE",
+              "correct":false
+            },
+            {
+              "answer":"PSIHIJATRIJE",
+              "correct":false
+            },
+            {
+              "answer":"EKONOMIJE",
+              "correct":false
+            },
+            {
+              "answer":"FILOZOFIJE",
+              "correct":true
+            }
+          ],
+          "end":30
+        }
+      ]
+    },
+    {
+      "gameId": 3,
+      "viewType":"ORDER_ANSWERS",
+      "start":30,
+      "end":40,
+      "questions":[
+        {
+          "question":"POREĐAJTE PLANETE SUNČEVOG SISTEMA PO VELIČINI, OD NAJVEĆE KA NAJMANJOJ:",
+          "answers":[
+            {
+              "answer":"VENERA",
+              "order":3
+            },
+            {
+              "answer":"MARS",
+              "order":4
+            },
+            {
+              "answer":"JUPITER",
+              "order":1
+            },
+            {
+              "answer":"ZEMLJA",
+              "order":2
+            }
+          ],
+          "end":40
+        }
+      ]
+    },
+    {
+      "gameId": 4,
+      "viewType":"TYPE_ANSWER",
+      "start":40,
+      "end":50,
+      "questions":[
+        {
+          "question":"KOJU RASU EKSTREMNO VELIKIH PASA NAJČEŠĆE POVEZUJEMO SA PRIDEVIMA „ENGLESKI”, „TIBETANSKI” ILI „NAPULJSKI”, A NAVODNO JE NEKADA POSTOJAO I „SRPSKI”?",
+          "answers":[
+            {
+              "answer":"MASTIF",
+              "correct":false
+            },
+            {
+              "answer":"MASTIF",
+              "correct":false
+            },
+            {
+              "answer":"MASTIF",
+              "correct":false
+            },
+            {
+              "answer":"MASTIF",
+              "correct":false
+            }
+          ],
+          "end":50
+        }
+      ]
+    },
+    {
+      "gameId": 5,
+      "viewType":"TYPE_ANSWER",
+      "start":50,
+      "end":60,
+      "questions":[
+        {
+          "question":"ZA NACIONALNU KUHINJU KOJE ZEMLJE VEZUJEMO HLEB SA SIROM HAČAPURI, TE KNEDLE SA SIROM, HINKALI?",
+          "answers":[
+            {
+              "answer":"GRUZIJA",
+              "correct":false
+            },
+            {
+              "answer":"GRUZIJA",
+              "correct":false
+            },
+            {
+              "answer":"GRUZIJA",
+              "correct":false
+            },
+            {
+              "answer":"GRUZIJA",
+              "correct":false
+            }
+          ],
+          "end":60
+        }
+      ]
+    },
+    {
+      "gameId": 6,
+      "viewType":"KO_ZNA_ZNA",
+      "start":60,
+      "end":70,
+      "questions":[
+        {
+          "question":"KOJA OD OVIH DRŽAVA NEMA IZLAZ NA SREDOZEMNO MORE?",
+          "answers":[
+            {
+              "answer":"SIRIJA",
+              "correct":false
+            },
+            {
+              "answer":"JORDAN",
+              "correct":true
+            },
+            {
+              "answer":"IZRAEL",
+              "correct":false
+            },
+            {
+              "answer":"LIBAN",
+              "correct":false
+            }
+          ],
+          "end":70
+        }
+      ]
+    },
+    {
+      "gameId": 7,
+      "viewType":"KO_ZNA_ZNA",
+      "start":70,
+      "end":80,
+      "questions":[
+        {
+          "question":"KOJE BOJE SU BILI „KOŠULJAŠI” KOJI SU PODRŽAVALI ĐUZEPEA GARIBALDIJA?",
+          "answers":[
+            {
+              "answer":"CRNE",
+              "correct":false
+            },
+            {
+              "answer":"CRVENE",
+              "correct":true
+            },
+            {
+              "answer":"BELE",
+              "correct":false
+            },
+            {
+              "answer":"PLAVE",
+              "correct":false
+            }
+          ],
+          "end":80
+        }
+      ]
+    },
+    {
+      "gameId": 8,
+      "viewType":"ORDER_ANSWERS",
+      "start":80,
+      "end":90,
+      "questions":[
+        {
+          "question":"POREĐAJTE BITKE HRONOLOŠKI, POČEV OD NAJSTARIJE:",
+          "answers":[
+            {
+              "answer":"ČEGAR",
+              "order":1
+            },
+            {
+              "answer":"VATERLO",
+              "order":2
+            },
+            {
+              "answer":"SOMA",
+              "order":3
+            },
+            {
+              "answer":"MIDVEJ",
+              "order":4
+            }
+          ],
+          "end":90
+        }
+      ]
+    },
+    {
+      "gameId": 9,
+      "viewType":"TYPE_ANSWER",
+      "start":90,
+      "end":100,
+      "questions":[
+        {
+          "question":"KOJI MOREUZ JE NAJUŽI PROLAZ KOJI SE KORISTI U MEĐUNARODNIM PLOVIDBAMA, A TURCI GA NAZIVAJU „BOGAZ”?",
+          "answers":[
+            {
+              "answer":"BOSFOR",
+              "correct":false
+            },
+            {
+              "answer":"BOSFOR",
+              "correct":false
+            },
+            {
+              "answer":"BOSFOR",
+              "correct":false
+            },
+            {
+              "answer":"BOSFOR",
+              "correct":false
+            }
+          ],
+          "end":100
+        }
+      ]
+    },
+    {
+      "gameId": 10,
+      "viewType":"TYPE_ANSWER",
+      "start":100,
+      "end":110,
+      "questions":[
+        {
+          "question":"POTIČUĆI OD LATINSKE REČI MONETA, MANAT JE NAZIV VALUTE NE SAMO U AZERBEJDŽANU, VEĆ I U KOJOJ JOŠ BIVŠOJ SOVJETSKOJ REPUBLICI?",
+          "answers":[
+            {
+              "answer":"TURKMENISTAN",
+              "correct":false
+            },
+            {
+              "answer":"TURKMENISTAN",
+              "correct":false
+            },
+            {
+              "answer":"TURKMENISTAN",
+              "correct":false
+            },
+            {
+              "answer":"TURKMENISTAN",
+              "correct":false
+            }
+          ],
+          "end":110
+        }
+      ]
+    },
+    {
+      "gameId": 11,
+      "viewType":"KO_ZNA_ZNA",
+      "start":110,
+      "end":120,
+      "questions":[
+        {
+          "question":"ĐORĐE ČVARKOV NA POSAO DOLAZI NERETKO AUTOBUSOM SA PEJIĆEVIH SALAŠA. KOJU LINIJU (PRI)GRADSKOG PREVOZA STOGA KORISTI?",
+          "answers":[
+            {
+              "answer":"20",
+              "correct":false
+            },
+            {
+              "answer":"30",
+              "correct":true
+            },
+            {
+              "answer":"31",
+              "correct":false
+            },
+            {
+              "answer":"32",
+              "correct":false
+            }
+          ],
+          "end":120
+        }
+      ]
+    },
+    {
+      "gameId": 12,
+      "viewType":"KO_ZNA_ZNA",
+      "start":120,
+      "end":130,
+      "questions":[
+        {
+          "question":"U SERIJALU, ULOGU JAGODE ODIGRALA JE GLUMICA SRPSKOG NARODNOG POZORIŠTA, TANJA, PREZIMENA:",
+          "answers":[
+            {
+              "answer":"MJERIMAČKA",
+              "correct":false
+            },
+            {
+              "answer":"ZEC",
+              "correct":false
+            },
+            {
+              "answer":"PJEVAC",
+              "correct":true
+            },
+            {
+              "answer":"LISICA",
+              "correct":false
+            }
+          ],
+          "end":130
+        }
+      ]
+    },
+    {
+      "gameId": 13,
+      "viewType":"ORDER_ANSWERS",
+      "start":130,
+      "end":140,
+      "questions":[
+        {
+          "question":"POREĐAJTE ČLANOVE PORODICE TORBICA OD NAJSTARIJEG KA NAJMLAĐEM:",
+          "answers":[
+            {
+              "answer":"MILICA",
+              "order":4
+            },
+            {
+              "answer":"MILOŠ",
+              "order":2
+            },
+            {
+              "answer":"MILAN",
+              "order":3
+            },
+            {
+              "answer":"SMILJKA",
+              "order":1
+            }
+          ],
+          "end":140
+        }
+      ]
+    },
+    {
+      "gameId": 14,
+      "viewType":"TYPE_ANSWER",
+      "start":140,
+      "end":150,
+      "questions":[
+        {
+          "question":"U KOM MAĐARSKOM GRADU, INAČE NAJVEĆEM GRADU BARANJE, ĐORĐE ČVARKOV IMA SINA?",
+          "answers":[
+            {
+              "answer":"PEČUJ",
+              "correct":false
+            },
+            {
+              "answer":"PEČUJ",
+              "correct":false
+            },
+            {
+              "answer":"PEČUJ",
+              "correct":false
+            },
+            {
+              "answer":"PEČUJ",
+              "correct":false
+            }
+          ],
+          "end":150
+        }
+      ]
+    },
+    {
+      "gameId": 15,
+      "viewType":"TYPE_ANSWER",
+      "start":150,
+      "end":160,
+      "questions":[
+        {
+          "question":"PO KOM JE VOĆU NAJPOZNATIJI ARILJSKI KRAJ, IZ KOG DOLAZI BOŠKIĆ?",
+          "answers":[
+            {
+              "answer":"MALINE",
+              "correct":false
+            },
+            {
+              "answer":"MALINE",
+              "correct":false
+            },
+            {
+              "answer":"MALINE",
+              "correct":false
+            },
+            {
+              "answer":"MALINE",
+              "correct":false
+            }
+          ],
+          "end":160
+        }
+      ]
+    },
+    {
+      "gameId": 16,
+      "viewType":"KO_ZNA_ZNA",
+      "start":160,
+      "end":170,
+      "questions":[
+        {
+          "question":"KOJIM SU SE SPORTOM BAVILI MILE ISAKOVIĆ I VESELIN VUKOVIĆ?",
+          "answers":[
+            {
+              "answer":"FUDBALOM",
+              "correct":false
+            },
+            {
+              "answer":"KOŠARKOM",
+              "correct":false
+            },
+            {
+              "answer":"RUKOMETOM",
+              "correct":true
+            },
+            {
+              "answer":"RVANJEM",
+              "correct":false
+            }
+          ],
+          "end":170
+        }
+      ]
+    },
+    {
+      "gameId": 17,
+      "viewType":"KO_ZNA_ZNA",
+      "start":170,
+      "end":180,
+      "questions":[
+        {
+          "question":"KOJA OD OVIH AMERIKANKI NIJE OSVOJILA NIJEDAN TENISKI GREND SLEM U SINGLU?",
+          "answers":[
+            {
+              "answer":"SOFIJA KENIN",
+              "correct":false
+            },
+            {
+              "answer":"SLOUN STIVENS",
+              "correct":false
+            },
+            {
+              "answer":"KOKO GOF",
+              "correct":false
+            },
+            {
+              "answer":"DŽESIKA PEGULA",
+              "correct":true
+            }
+          ],
+          "end":180
+        }
+      ]
+    },
+    {
+      "gameId": 18,
+      "viewType":"ORDER_ANSWERS",
+      "start":180,
+      "end":190,
+      "questions":[
+        {
+          "question":"POREĐAJTE GRADOVE DOMAĆINE LETNJIH OLIMPIJSKIH IGARA, POČEV OD NAJRANIJEG:",
+          "answers":[
+            {
+              "answer":"RIO DE ŽANEIRO",
+              "order":4
+            },
+            {
+              "answer":"PEKING",
+              "order":3
+            },
+            {
+              "answer":"ANTVERPEN",
+              "order":1
+            },
+            {
+              "answer":"MELBURN",
+              "order":2
+            }
+          ],
+          "end":190
+        }
+      ]
+    },
+    {
+      "gameId": 19,
+      "viewType":"TYPE_ANSWER",
+      "start":190,
+      "end":200,
+      "questions":[
+        {
+          "question":"KOJI FUDBALSKI KLUB JE POSTAO PRVAK EVROPE 1998. GODINE, KADA JE JEDINI POGODAK U FINALU LIGE ŠAMPIONA POSTIGAO PREDRAG MIJATOVIĆ?",
+          "answers":[
+            {
+              "answer":"REAL MADRID",
+              "correct":false
+            },
+            {
+              "answer":"REAL MADRID",
+              "correct":false
+            },
+            {
+              "answer":"REAL MADRID",
+              "correct":false
+            },
+            {
+              "answer":"REAL MADRID",
+              "correct":false
+            }
+          ],
+          "end":200
+        }
+      ]
+    },
+    {
+      "gameId": 20,
+      "viewType":"TYPE_ANSWER",
+      "start":200,
+      "end":210,
+      "questions":[
+        {
+          "question":"NAZVANA PO OBLIŽNJEM PARKU, SPORTSKA DVORANA „DUDOVA ŠUMA” NALAZI SE U KOM NAŠEM GRADU?",
+          "answers":[
+            {
+              "answer":"SUBOTICA",
+              "correct":false
+            },
+            {
+              "answer":"SUBOTICA",
+              "correct":false
+            },
+            {
+              "answer":"SUBOTICA",
+              "correct":false
+            },
+            {
+              "answer":"SUBOTICA",
+              "correct":false
+            }
+          ],
+          "end":210
+        }
+      ]
+    },
+    {
+      "gameId": 21,
+      "viewType":"KO_ZNA_ZNA",
+      "start":210,
+      "end":220,
+      "questions":[
+        {
+          "question":"KO SE OD SLEDEĆIH GLUMACA I GLUMICA NE PREZIVA „GAVRILOVIĆ” U KULTNOJ TV SERIJI „PORODIČNO BLAGO?",
+          "answers":[
+            {
+              "answer":"ŽIKA MILENKOVIĆ",
+              "correct":false
+            },
+            {
+              "answer":"VESNA TRIVALIĆ",
+              "correct":false
+            },
+            {
+              "answer":"MINA LAZAREVIĆ",
+              "correct":false
+            },
+            {
+              "answer":"MILENKO ZABLAĆANSKI",
+              "correct":true
+            }
+          ],
+          "end":220
+        }
+      ]
+    },
+    {
+      "gameId": 22,
+      "viewType":"KO_ZNA_ZNA",
+      "start":220,
+      "end":230,
+      "questions":[
+        {
+          "question":"NEMOJTE DA SKAČETE OD SREĆE: DEJVID LI ROT BIO JE PEVAČ KOJE ROK GRUPE?",
+          "answers":[
+            {
+              "answer":"MEGADET",
+              "correct":false
+            },
+            {
+              "answer":"TOTO",
+              "correct":false
+            },
+            {
+              "answer":"VAN HALEN",
+              "correct":true
+            },
+            {
+              "answer":"VAN MORISON",
+              "correct":false
+            }
+          ],
+          "end":230
+        }
+      ]
+    },
+    {
+      "gameId": 23,
+      "viewType":"ORDER_ANSWERS",
+      "start":230,
+      "end":240,
+      "questions":[
+        {
+          "question":"PO GODINI IZDAVANJA, POREĐAJTE ALBUME LEPE BRENE, POČEV OD NAJSTARIJEG:",
+          "answers":[
+            {
+              "answer":"UĐI SLOBODNO",
+              "order":1
+            },
+            {
+              "answer":"MILE VOLI DISKO",
+              "order":2
+            },
+            {
+              "answer":"LUDA ZA TOBOM",
+              "order":3
+            },
+            {
+              "answer":"ČAČAK, ČAČAK",
+              "order":1
+            }
+          ],
+          "end":240
+        }
+      ]
+    },
+    {
+      "gameId": 25,
+      "viewType":"TYPE_ANSWER",
+      "start":240,
+      "end":250,
+      "questions":[
+        {
+          "question":"PROBILA SE KAO „PRAVNA PLAVUŠA”, A OSKAROVKA JE POSTALA ODGLUMIVŠI LJUBAV DŽONIJA KEŠA, DŽUN KARTER: O KOJOJ SE AMERIČKOJ GLUMICI RADI?",
+          "answers":[
+            {
+              "answer":"Riz VIDERSPUN",
+              "correct":false
+            },
+            {
+              "answer":"Riz VIDERSPUN",
+              "correct":false
+            },
+            {
+              "answer":"Riz VIDERSPUN",
+              "correct":false
+            },
+            {
+              "answer":"Riz VIDERSPUN",
+              "correct":false
+            }
+          ],
+          "end":250
+        }
+      ]
+    },
+    {
+      "gameId": 26,
+      "viewType":"TYPE_ANSWER",
+      "start":250,
+      "end":260,
+      "questions":[
+        {
+          "question":"KOJA JE MUZIČKA DIVA BIVŠA SUPRUGA NE SAMO GLUMCA ŠONA PENA, VEĆ I REŽISERA GAJA RIČIJA?",
+          "answers":[
+            {
+              "answer":"MADONA",
+              "correct":false
+            },
+            {
+              "answer":"MADONA",
+              "correct":false
+            },
+            {
+              "answer":"MADONA",
+              "correct":false
+            },
+            {
+              "answer":"MADONA",
+              "correct":false
+            }
+          ],
+          "end":260
+        }
+      ]
+    }
+  ]
+}

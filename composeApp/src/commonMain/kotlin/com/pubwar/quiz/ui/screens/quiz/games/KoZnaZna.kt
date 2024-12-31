@@ -83,6 +83,13 @@ fun KoZnaZna(koZnaZnaViewModel: KoZnaZnaViewModel, userFinished: () -> Unit) {
                     textAlign = TextAlign.Center,
                     color = LightBLue)
             )
+
+
+
+            Text(
+                text = koZnaZnaViewModel.questions[currentIndex].question,
+                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
+            )
         }
 
         Spacer(Modifier.weight(1f))

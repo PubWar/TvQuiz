@@ -22,7 +22,11 @@ class ActiveQuizRepoImpl(private val localDataSource: LocalDataSource) : ActiveQ
 
         if (lastGame != null) {
             return if(lastGame.end - expired / 1000 > 0)
-                arrayOf(expiration.toLong(), startTime)
+            {
+
+                arrayOf(expiration, startTime)
+            }
+
             else{
                 localDataSource.clearActiveQuiz()
                 arrayOf(0,0)

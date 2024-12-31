@@ -13,6 +13,7 @@ class LocalDataSourceImpl(
     private val pref: DataStore<Preferences>
 ) : LocalDataSource {
 
+    private val accessToken = stringPreferencesKey("ACCESS_TOKEN")
     private val usernameKey = stringPreferencesKey("USERNAME")
     private val currentQuizId = stringPreferencesKey("QUIZ_ID")
     private val currentExpired = longPreferencesKey("EXPIRED")
@@ -54,11 +55,15 @@ class LocalDataSourceImpl(
 
 
     override suspend fun saveAccessToken(accessToken: String) {
-        TODO("Not yet implemented")
+        pref.edit { dataStore ->
+            dataStore[this.accessToken] = accessToken.replace("\"", "")
+        }
     }
 
     override suspend fun getAccessToken(): String? {
-        TODO("Not yet implemented")
+        return pref.data.map {
+            it[accessToken]
+        }.first()
     }
 
     override suspend fun saveCurrentQuizId(id: String) {
@@ -80,9 +85,7 @@ class LocalDataSourceImpl(
     }
 
     override suspend fun getCurrentQuizStartTime(): Long {
-        return pref.data.map {
-            it[currentStartTime]
-        }.first() ?: 0
+        return pref.data.map { it[currentStartTime] }.first() ?: 0
     }
 
     override suspend fun saveCurrentQuizExpiration(expiration: Long) {
@@ -92,7 +95,6 @@ class LocalDataSourceImpl(
     }
 
     override suspend fun getCurrentQuizExpiration(): Long {
-
         return pref.data.map { it[currentExpired] }.first() ?: 0
     }
 }

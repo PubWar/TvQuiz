@@ -100,7 +100,7 @@ suspend fun String.encrypt(): String
     val paddedPlaintext = addPadding(plaintext, 16)
 
     // Encrypt
-    val ciphertext: ByteArray = cipher.encrypt(iv = HEX_IV.toByteArray(), plaintextInput = paddedPlaintext)
+    val ciphertext: ByteArray = cipher.encrypt(iv = HEX_IV.toByteArray(), plaintextInput = plaintext)
 
 
     return ciphertext.toHexString(HexFormat.UpperCase)
@@ -110,6 +110,7 @@ suspend fun String.encrypt(): String
 @OptIn(DelicateCryptographyApi::class)
 suspend fun String.decryptString() : String{
     val ciphertext = this.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+//    val ciphertext = this.toByteArray()
     // Initialize Cryptography
     val cryptography = CryptographyProvider.Default
     // Configure AES-CBC
@@ -136,4 +137,9 @@ suspend inline fun <reified T> String.decrypt() : T {
 fun addPadding(data: ByteArray, blockSize: Int): ByteArray {
     val paddingSize = blockSize - (data.size % blockSize)
     return data + ByteArray(paddingSize) { paddingSize.toByte() }
+}
+
+fun String.phoneFormat() : String
+{
+    return this.replace("+", "")
 }

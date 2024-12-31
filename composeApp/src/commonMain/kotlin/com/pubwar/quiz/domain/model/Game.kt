@@ -22,7 +22,9 @@ enum class ViewType {
 }
 @Serializable
 data class Game(
-    @SerialName("viewType") val name: ViewType,
+    val gameId : Int,
+    @SerialName("viewType")
+    val name: ViewType,
     val start: Int,
     val end: Int,
     var points: Int = 0,

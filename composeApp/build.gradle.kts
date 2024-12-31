@@ -5,8 +5,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.googleService)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.buildkonfig)
@@ -26,10 +28,27 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "composeApp"
             isStatic = true
         }
     }
+
+
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        ios.deploymentTarget = "16.0"
+        podfile = project.file("../iosApp/Podfile")
+        pod("FirebaseAuth") {
+            // Add these lines
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("FirebaseCore")
+        pod("FirebaseMessaging")
+    }
+
+
 
 
     sourceSets {
@@ -48,6 +67,15 @@ kotlin {
 
             implementation(libs.ktor.client.okhttp)
             implementation("dev.whyoleg.cryptography:cryptography-provider-jdk")
+
+            // Import the BoM for the Firebase platform
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.7.0"))
+
+            // Add the dependency for the Firebase Authentication library
+            // When using the BoM, you don't specify versions in Firebase library dependencies
+            implementation("com.google.firebase:firebase-auth")
+            implementation("com.google.firebase:firebase-messaging")
+
         }
 
         commonMain.dependencies {
@@ -87,6 +115,7 @@ kotlin {
             implementation(project.dependencies.platform("dev.whyoleg.cryptography:cryptography-bom:0.3.1"))
             implementation("dev.whyoleg.cryptography:cryptography-core")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+
         }
 
         iosMain.dependencies {
@@ -101,7 +130,6 @@ kotlin {
 buildkonfig {
     packageName = "com.pubwar.quiz"
     defaultConfigs {
-        buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "default")
         buildConfigField(FieldSpec.Type.STRING, "PACKAGE", packageName)
         buildConfigField(
             FieldSpec.Type.STRING,
@@ -112,7 +140,7 @@ buildkonfig {
         buildConfigField(
             FieldSpec.Type.STRING,
             "BASE_URL",
-            "https://pwapi2-d2ajagdefwcncwc5.westeurope-01.azurewebsites.net/"
+            "https://pwapi2-d2ajagdefwcncwc5.westeurope-01.azurewebsites.net"
         )
         buildConfigField(FieldSpec.Type.STRING, "FLAVOR", "default")
     }

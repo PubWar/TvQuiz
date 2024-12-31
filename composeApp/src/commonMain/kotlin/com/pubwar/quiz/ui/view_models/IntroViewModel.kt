@@ -22,7 +22,14 @@ class IntroViewModel(
     init {
         viewModelScope.launch {
             val quizId = activeQuizRepo.getQuizId()
+            println("======= " + quizId)
             activeQuizRepo.getExpiredTime(quizId).let { expired ->
+
+                for ( i in expired)
+                {
+                    println("======= " + i)
+                }
+
                 if (expired[0] > 0) {
                     _state.update {
                         it.copy(

@@ -7,7 +7,8 @@ sealed interface DataError: Error {
         NO_INTERNET,
         SERVER,
         SERIALIZATION,
-        UNKNOWN
+        UNKNOWN,
+        UNAUTHORIZED
     }
 
     enum class Local: DataError {

@@ -8,5 +8,6 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 data class QuizConfResponseDto(
-    @SerialName("games") val games: List<Game>
+    @SerialName("games") val games: List<Game>,
+    @SerialName("quizId") val quizId: String
 )

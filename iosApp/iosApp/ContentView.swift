@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import ComposeApp
+import composeApp
 
 struct ComposeView: UIViewControllerRepresentable {
     
@@ -10,7 +10,7 @@ struct ComposeView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
-
+ 
 struct ContentView: View {
     var body: some View {
         ComposeView().ignoresSafeArea(.all).preferredColorScheme(.dark)// Compose has own keyboard handler

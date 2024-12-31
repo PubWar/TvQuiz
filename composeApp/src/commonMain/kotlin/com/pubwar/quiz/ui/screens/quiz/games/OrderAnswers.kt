@@ -75,6 +75,12 @@ fun OrderAnswers(orderAnswersViewModel: OrderAnswersViewModel, userFinished: () 
                     textAlign = TextAlign.Center,
                     color = LightBLue)
             )
+
+
+            Text(
+                text = orderAnswersViewModel.questions[currentIndex].question,
+                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
+            )
         }
 
         Spacer(Modifier.weight(1f))

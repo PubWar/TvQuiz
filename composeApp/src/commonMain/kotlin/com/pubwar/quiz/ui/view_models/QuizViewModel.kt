@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.pubwar.quiz.core.Timer
 import com.pubwar.quiz.core.domain.onError
 import com.pubwar.quiz.core.domain.onSuccess
+import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.domain.model.ViewType
 import com.pubwar.quiz.domain.repos.QuizRepository
 import com.pubwar.quiz.getCurrentTime
@@ -39,7 +40,7 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
         println("time: $_time")
     }
 
-    private val quizId = "test"
+    private val quizId = "86f56545-a1e7-40fe-b9c5-3113ea73e03f"
 
     init {
         timer.start(expired)
@@ -118,6 +119,9 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
         }
 
         if (previousState.currentGame != null) {
+
+            sendResult(previousState.currentGame)
+
             _state.update {
                 it.copy(
                     pointsOfTheLastGame = previousState.currentGame.points,
@@ -141,6 +145,11 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
         } ?: run {
             _gameTime.value = 0
         }
+    }
+
+
+    private fun sendResult(lastGame: Game) = viewModelScope.launch {
+        quizRepository.sendResult(lastGame.gameId, lastGame.points, 10)
     }
 
     fun gamerFinishTheGame() {

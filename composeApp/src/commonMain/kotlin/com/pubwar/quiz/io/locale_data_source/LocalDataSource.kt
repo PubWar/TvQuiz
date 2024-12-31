@@ -21,6 +21,4 @@ interface LocalDataSource {
 
     suspend fun clearActiveQuiz()
 
-
-
 }
