@@ -17,6 +17,10 @@ class IOSPhoneAuth : PhoneAuth {
         println(phoneNumber)
         println("=============")
 
+//        FIRAuth.auth().settings()?.setAppVerificationDisabledForTesting(true)
+        println("try to get client id from kotlin")
+        println(FIRApp.defaultApp()?.options?.clientID)
+
         FIRPhoneAuthProvider.provider().verifyPhoneNumber(
             phoneNumber,
             null
@@ -37,12 +41,16 @@ class IOSPhoneAuth : PhoneAuth {
         onError: (Exception) -> Unit
     ) {
         val credential = FIRPhoneAuthProvider.provider().credentialWithVerificationID(verificationId, code)
-        FIRAuth.auth()?.signInWithCredential(credential) { _, error ->
+
+        FIRAuth.auth().signInWithCredential(credential) { authResult, error ->
             if (error != null) {
                 onError(Exception(error.localizedDescription))
+            } else if (authResult != null) {
+                authResult.user().phoneNumber()?.let { onSuccess(it) }
             } else {
-                onSuccess("need to implement")
+                onError(Exception("Unknown error"))
             }
         }
     }
 }
+

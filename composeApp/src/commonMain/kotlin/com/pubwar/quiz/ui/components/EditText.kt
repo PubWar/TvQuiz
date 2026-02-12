@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import com.pubwar.quiz.isDigit
 import com.pubwar.quiz.ui.theme.AppGradients
 import com.pubwar.quiz.ui.theme.Blue
+import com.pubwar.quiz.ui.theme.BorderColor
 import com.pubwar.quiz.ui.theme.CircleBlue
 import com.pubwar.quiz.ui.theme.EditTextColor
 import com.pubwar.quiz.ui.theme.PrimaryColor
@@ -115,7 +116,7 @@ fun EditText(
         )
         .border(
             width = 2.dp,
-            color = Color(0xFFFFFFFF),
+            color = BorderColor,
             shape = RoundedCornerShape(size = 8.dp)
         )
         .padding(2.dp),
@@ -264,8 +265,8 @@ private fun CharView(
             AppGradients.whiteGradient,
         )
         .border(
-            width = 2.dp,
-            color = if(isFocused) Blue else Color(0xFFFFFFFF),
+            width = 1.dp,
+            color = if(isFocused) Color.Black else BorderColor,
             shape = RoundedCornerShape(size = 8.dp)
         )
         .padding(2.dp),

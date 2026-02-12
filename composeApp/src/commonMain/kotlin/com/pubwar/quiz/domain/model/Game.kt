@@ -29,7 +29,7 @@ data class Game(
     val end: Int,
     var points: Int = 0,
     var area: String? = "",
-    var message: String = "Време је истекло!",
+    var message: String = "Vreme je isteklo!",
     val questions: ArrayList<Question>? = null,
     val letters: ArrayList<String>? = null,
     val numbers: ArrayList<Int>? = null,

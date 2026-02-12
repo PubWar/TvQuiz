@@ -8,9 +8,14 @@ enum class PhoneAuthState{
     Unauthorized
 }
 data class LoginState(
-    val phoneNumber: String = "+381631322248",
+    val showLoginPage: Boolean = false,
+    val phoneNumber: String = "+381",
     val firstName: String = "",
     val lastName: String = "",
+    val email: String = "",
+    val city: String = "",
+    val address: String = "",
+    val age: String = "",
     val smsCode: String = "",
 
     val isLoading: Boolean = false,

@@ -6,14 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.pubwar.quiz.domain.model.Answer
 import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.domain.model.Question
+import com.pubwar.quiz.domain.repos.QuizRepository
 import com.pubwar.quiz.getCurrentTime
+import com.pubwar.quiz.utills.addPointsBaseOnTime
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class KoZnaZnaViewModel(game: Game?) : ViewModel() {
+class KoZnaZnaViewModel(game: Game?, private val quizRepository: QuizRepository) : ViewModel() {
 
     private var timerJob: Job? = null
 
@@ -21,7 +23,7 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
     private var isRunning: Boolean = false
 
 
-    private val expired: Int = game?.start ?: 0
+    private var expired: Int = game?.start ?: 0
 
     private val _time = MutableStateFlow(expired)
     val time: StateFlow<Int> = _time
@@ -29,7 +31,7 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
     private val _timeToNext = MutableStateFlow("00:00")
     val timeToNext: StateFlow<String> = _timeToNext
 
-    private val _game = game
+    private var _game = game
 
     var questions = ArrayList<Question>()
 
@@ -46,9 +48,29 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
     private val _gameIsFinished = MutableStateFlow(false)
     val gameIsFinished: StateFlow<Boolean> = _gameIsFinished
 
+
+    private val _selectedAnswer = MutableStateFlow<Answer.OneAnswer?>(null)
+    val selectedAnswer: StateFlow<Answer.OneAnswer?> = _selectedAnswer
     init {
-        questions = game?.questions as ArrayList<Question>
+//        println("KO ZNA ZNA VIEW MODEL IS CREATED")
+//        questions = game?.questions as ArrayList<Question>
+//        startTimer()
+
+        initViewModel()
+    }
+
+    fun initViewModel()
+    {
+        println("KO ZNA ZNA VIEW MODEL IS CREATED")
+        questions = _game?.questions as ArrayList<Question>
         startTimer()
+    }
+
+    fun updateGame(game: Game?)
+    {
+        expired = game?.start ?: 0
+        _game = game
+        initViewModel()
     }
 
     private fun startTimer() {
@@ -60,8 +82,6 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
             while (isRunning) {
                 val elapsed = getCurrentTime() - startTime
                 _time.value = (elapsed / 1000).toInt() + expired
-
-                println("time value: ${_time.value.toString()}")
                 onTick(_time.value)
                 delay(1000L - (elapsed % 1000)) //
             }
@@ -90,13 +110,44 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
     }
 
 
+
     fun setAnswer(answer: Answer.OneAnswer) {
-//        if (!_answerSelected.value) {
-//            answer.selected = true
-//            _answerSelected.value = true
-//        }
-        answer.selected = _answerSelected.value.not()
-        _answerSelected.value = _answerSelected.value.not()
+        if (!answerIsSend.value) {
+            val currentQuestion = questions.elementAtOrNull(_currentIndex.value)
+
+            currentQuestion?.answers?.mapNotNull { it as? Answer.OneAnswer }
+                ?.forEach { it.selected = false }
+            answer.selected = true
+//            _selectedAnswer.value = answer
+        }
+    }
+
+    fun sendResult() = viewModelScope.launch {
+
+        if(!answerIsSend.value){
+            _game?.let { game ->
+                _answerIsSend.value = true
+                val answerInSecond = _time.value - game.start
+
+                val points = questions.fastSumBy { question ->
+                    question.answers.firstOrNull { (it as Answer.OneAnswer).selected }?.let {
+                        if ((it as Answer.OneAnswer).correct)
+                            10.addPointsBaseOnTime(game.start, _time.value) else 0
+                    } ?: 0
+                }
+
+//                val p = if(selectedAnswer.value?.selected == true)
+//                            10.addPointsBaseOnTime(game.start, _time.value) else 0
+
+                game.message = "Osvojili ste $points poena"
+                game.points = points
+
+                println("send result to server")
+                quizRepository.sendResult(game.gameId, points, answerInSecond)
+
+                finishGame()
+            }
+        }
 
     }
 
@@ -104,23 +155,6 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
     private fun finishGame() {
         isRunning = false
         timerJob?.cancel()
-
-        val points = questions.fastSumBy { question ->
-
-//            question.answers.firstOrNull { it.selected }?.let { answer ->
-//                if (answer.correct) 10 else -5
-//            } ?: 0
-            question.answers.firstOrNull{(it as Answer.OneAnswer).selected}?.let {
-                if((it as Answer.OneAnswer).correct ) 10 else -5
-            } ?: 0
-        }
-
-
-
-        println("Освојили сте $points поена")
-        _game?.message = "Освојили сте $points поена"
-        _game?.points = points
-
         _gameIsFinished.value = true
     }
 }

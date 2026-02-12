@@ -1,0 +1,155 @@
+{
+  "quizId":"5d5e2ab5-37b4-4997-b5b5-859ec7b388f4",
+  "games":[
+    {
+      "gameId":1,
+      "viewType":"KO_ZNA_ZNA",
+      "start":549,
+      "end":571,
+      "questions":[
+        {
+          "question":"„KAKO GLASI SIMBOL HEMIJSKOG ELEMENTA KALAJA?",
+          "answers":[
+            {
+              "answer":"KA",
+              "correct":false
+            },
+            {
+              "answer":"SB",
+              "correct":false
+            },
+            {
+              "answer":"SN",
+              "correct":true
+            },
+            {
+              "answer":"SR",
+              "correct":false
+            }
+          ],
+          "topic":"OPŠTE ZNANJE",
+          "end":571
+        }
+      ]
+    },
+    {
+      "gameId":2,
+      "viewType":"KO_ZNA_ZNA",
+      "start":613,
+      "end":638,
+      "questions":[
+        {
+          "question":"ŠPANSKA ČETVRT JE ISTORIJSKI I TURISTIČKI KVART U KOM ITALIJANSKOM GRADU?",
+          "answers":[
+            {
+              "answer":"RIM",
+              "correct":false
+            },
+            {
+              "answer":"NAPULJ",
+              "correct":true
+            },
+            {
+              "answer":"TORINO",
+              "correct":false
+            },
+            {
+              "answer":"PALERMO",
+              "correct":false
+            }
+          ],
+          "topic":"OPŠTE ZNANJE",
+          "end":638
+        }
+      ]
+    },
+    {
+      "gameId":3,
+      "viewType":"ORDER_ANSWERS",
+      "start":748,
+      "end":769,
+      "questions":[
+        {
+          "question":"POREĐAJTE GRAĐEVINE PO VISINI, POČEV OD NAJNIŽE:",
+          "answers":[
+            {
+              "answer":"TAJPEJ 101",
+              "order":2
+            },
+            {
+              "answer":"BURDŽ KALIFA",
+              "order":4
+            },
+            {
+              "answer":"ŠANGAJSKI TORANJ",
+              "order":3
+            },
+            {
+              "answer":"KULA BEOGRAD",
+              "order":1
+            }
+          ],
+          "topic":"OPŠTE ZNANJE",
+          "end":769
+        }
+      ]
+    },
+    {
+      "gameId":4,
+      "viewType":"TYPE_ANSWER",
+      "start":843,
+      "end":864,
+      "questions":[
+        {
+          "question":"MUZEJ NEVINOSTI JEDAN JE OD NAJPOSEĆENIJIH MUZEJA KOJE DRŽAVE, A OSNOVAO GA JE I PO SVOM DELU NAZVAO JEDINI KNJIŽEVNI NOBELOVAC TRAŽENE ZEMLJE”?",
+          "answers":[
+            {
+              "answer":"TURSKA",
+              "correct":false
+            }
+          ],
+          "topic":"OPŠTE ZNANJE",
+          "end":864
+        }
+      ]
+    },
+    {
+      "gameId":5,
+      "viewType":"TYPE_ANSWER",
+      "start":931,
+      "end":949,
+      "questions":[
+        {
+          "question":"ZA VREME GRADONAČELNIKA JOVANA DEJANOVIĆA, U NOVOM SADU IZGRAĐENA SU TRI KAPITALNA OBJEKTA: SNP, SPENS I KOJA JOŠ GRAĐEVINA?",
+          "answers":[
+            {
+              "answer":"MOST SLOBODE",
+              "correct":false
+            }
+          ],
+          "topic":"OPŠTE ZNANJE",
+          "end":949
+        }
+      ]
+    },
+    {
+      "gameId":6,
+      "viewType":"TYPE_ANSWER",
+      "start":1025,
+      "end":1046,
+      "questions":[
+        {
+          "question":"89-GODIŠNJI SALMAN KRALJ JE KOJE DRŽAVE OD 2015. GODINE?",
+          "answers":[
+            {
+              "answer":"SAUDIJSKA ARABIJA",
+              "correct":false
+            }
+          ],
+          "topic":"OPŠTE ZNANJE",
+          "end":1046
+        }
+      ]
+    }
+  ]
+}

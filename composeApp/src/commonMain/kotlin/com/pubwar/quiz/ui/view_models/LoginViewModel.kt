@@ -20,14 +20,12 @@ class LoginViewModel(private val loginRepo: LoginRepository) : ViewModel() {
     init {
         viewModelScope.launch {
             loginRepo.isLoggedIn().let { loggedIn ->
-                if (loggedIn) {
                     _state.update {
                         it.copy(
-                            success = true
+                            showLoginPage = !loggedIn,
+                            success = loggedIn
                         )
                     }
-                }
-
             }
         }
     }
@@ -61,6 +59,30 @@ class LoginViewModel(private val loginRepo: LoginRepository) : ViewModel() {
         _state.update {
             it.copy(
                 lastName = lastname
+            )
+        }
+    }
+
+    fun onEmailChanged(email: String) {
+        _state.update {
+            it.copy(
+                email = email
+            )
+        }
+    }
+
+    fun onCityChanged(city: String) {
+        _state.update {
+            it.copy(
+                city = city
+            )
+        }
+    }
+
+    fun onAgeChanged(age: String) {
+        _state.update {
+            it.copy(
+                age = age
             )
         }
     }
@@ -128,7 +150,7 @@ class LoginViewModel(private val loginRepo: LoginRepository) : ViewModel() {
             .onSuccess { response ->
                 _state.update {
                     it.copy(
-                        verifiedPhoneNumber = response,
+                        verifiedPhoneNumber = response.phoneNumber,
                         errorMessage = null,
                         isLoading = false,
                         success = true,
@@ -146,8 +168,8 @@ class LoginViewModel(private val loginRepo: LoginRepository) : ViewModel() {
             }
     }
 
-    fun register(firstname: String, lastname: String) = viewModelScope.launch {
-        loginRepo.register(firstname, lastname, _state.value.phoneNumber)
+    fun register() = viewModelScope.launch {
+        loginRepo.register(_state.value.firstName, _state.value.lastName, _state.value.phoneNumber, _state.value.email, _state.value.city, _state.value.age.toInt())
             .onSuccess {
                 _state.update {
                     it.copy(

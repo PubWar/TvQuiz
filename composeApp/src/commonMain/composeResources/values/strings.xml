@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Slagalica</string>
+    <string name="app_name">RTV</string>
     <string name="title">Some title</string>
 
     <string name="login_button">Uloguj se</string>
@@ -8,11 +8,11 @@
 
     <string name="test_string">Пошаљи</string>
     <string name="send_result_button">Пошаљи</string>
-    <string name="open_qr_scanner">Отвори скенер</string>
+    <string name="open_qr_scanner">OTVORI SKENER</string>
 
-    <string name="hello">Здраво, %1$s!</string>
-    <string name="intro_subtitle1">Желиш да се такмичиш са осталим гледаоцима?</string>
-    <string name="intro_subtitle2">Скенирај QR код да се укључиш у квиз</string>
+    <string name="hello">Zdravo, %1$s!</string>
+    <string name="intro_subtitle1">Dobrodošao u</string>
+    <string name="intro_subtitle2">Ako želiš da se takmičiš sa ostalim gledaocima, skeniraj QR kod da pokreneš igru</string>
     <string name="intro_info">Бодовање зависи од брзине и тачности! Сазнај више на </string>
 
     <string name="your_result">Мој број</string>
@@ -31,5 +31,11 @@
 
     <string name="congrats">Браво, %1$s!</string>
     <string name="congrats_info">Такмичила си се са %1$s такмичара и освојила %2$d. место!\nПогледај своје резултате у табели испод</string>
+
+
+
+    <string name="remaining_time">Preostalo vreme</string>
+    <string name="question_area">OBLAST</string>
+    <string name="points_for_game">Osvojili ste %1$d poena</string>
 
 </resources>

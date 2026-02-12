@@ -11,12 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import com.pubwar.quiz.ui.theme.AppGradients.linearGradient
 import org.jetbrains.compose.resources.painterResource
 import pubwartvquiz.composeapp.generated.resources.Res
 import pubwartvquiz.composeapp.generated.resources.background
 
-
-val LightColorScheme = lightColors(
+private val LightColorScheme = lightColors(
     primary = PrimaryColor,
     primaryVariant = PrimaryVariantColor,
     secondary = SecondaryColor,
@@ -59,7 +59,6 @@ fun MyAppTheme(content: @Composable () -> Unit) {
 }
 
 
-
 @Composable
 fun IntroTheme(content: @Composable () -> Unit) {
     MaterialTheme(
@@ -69,21 +68,18 @@ fun IntroTheme(content: @Composable () -> Unit) {
         // Make sure the content goes under the status bar
         content = {
             Box(
-//                Modifier
-//                    .fillMaxSize()
-//                    .background(brush = linearGradient)
-                        Modifier
-                        .fillMaxSize()
-                    .background(BackgroundColor)
+                Modifier
+                    .fillMaxSize()
+                    .background(brush = linearGradient)
 
             ) {
-                Image(
-                    painter = painterResource(Res.drawable.background),
-                    contentDescription = "image description",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
+//                Image(
+//                    painter = painterResource(Res.drawable.background),
+//                    contentDescription = "image description",
+//                    contentScale = ContentScale.FillBounds,
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                )
                 Box(
                     Modifier
                         .fillMaxSize()

@@ -1,11 +1,14 @@
 package com.pubwar.quiz.ui.view_models
 
+import androidx.compose.ui.util.fastSumBy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pubwar.quiz.domain.model.Answer
 import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.domain.model.Question
+import com.pubwar.quiz.domain.repos.QuizRepository
 import com.pubwar.quiz.getCurrentTime
+import com.pubwar.quiz.utills.addPointsBaseOnTime
 import com.pubwar.quiz.utills.formatDuration
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -13,7 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class OrderAnswersViewModel(game: Game?) : ViewModel() {
+class OrderAnswersViewModel(game: Game?, private val quizRepository: QuizRepository) : ViewModel() {
 
     private var timerJob: Job? = null
 
@@ -47,7 +50,7 @@ class OrderAnswersViewModel(game: Game?) : ViewModel() {
     val gameIsFinished: StateFlow<Boolean> = _gameIsFinished
 
     private val _answerArray = MutableStateFlow(ArrayList<Answer.OrderAnswer>())
-    val answerArray : StateFlow<ArrayList<Answer.OrderAnswer>> = _answerArray
+    val answerArray: StateFlow<ArrayList<Answer.OrderAnswer>> = _answerArray
 
     init {
         questions = game?.questions as ArrayList<Question>
@@ -90,29 +93,23 @@ class OrderAnswersViewModel(game: Game?) : ViewModel() {
 
     fun setAnswer(answer: Answer.OrderAnswer) {
 
-        if(_answerArray.value.contains(answer))
-        {
+        if (_answerArray.value.contains(answer)) {
             _answerArray.value = ArrayList(_answerArray.value).apply { remove(answer) }
-        }
-        else{
+        } else {
             _answerArray.value = ArrayList(_answerArray.value).apply { add(answer) }
         }
 
-        if(_answerArray.value.size == questions[_currentIndex.value].answers.size)
-        {
+        if (_answerArray.value.size == questions[_currentIndex.value].answers.size) {
             _answerSelected.value = true
             _answerArray.value.forEachIndexed { index, value ->
                 println("Index: $index, Value: $value")
-                if(index + 1 != value.order)
-                {
+                if (index + 1 != value.order) {
                     _answerSelected.value = false
                 }
             }
-        }
-        else{
+        } else {
             _answerSelected.value = false
         }
-
 
 //        if (!_answerSelected.value) {
 //            answer.selected = true
@@ -122,21 +119,38 @@ class OrderAnswersViewModel(game: Game?) : ViewModel() {
 //        _answerSelected.value = _answerSelected.value.not()
     }
 
+    private fun checkAnswer(): Boolean {
+        _answerArray.value.forEachIndexed { index, value ->
+            if (index + 1 != value.order)
+                return false
+        }
+        return true
+    }
+
+    fun sendResult() = viewModelScope.launch {
+
+        if(!answerIsSend.value){
+            _answerIsSend.value = true
+            _game?.let { game ->
+                val answerInSecond = _time.value - game.start
+
+                val points = if (checkAnswer()) 10.addPointsBaseOnTime(_game.start, _time.value) else 0
+
+                game.message = "Osvojili ste $points poena"
+                game.points = points
+
+                println("send result to server")
+                quizRepository.sendResult(game.gameId, points, answerInSecond)
+                finishGame()
+            }
+        }
+
+    }
+
+
     private fun finishGame() {
         isRunning = false
         timerJob?.cancel()
-
-        val points = 0
-//        val points = questions.fastSumBy { question ->
-//            question.answers.firstOrNull { it.selected }?.let { answer ->
-//                if (answer.correct) 10 else -5
-//            } ?: 0
-//        }
-
-        println("Освојили сте $points поена")
-        _game?.message = "Освојили сте $points поена"
-        _game?.points = points
-
         _gameIsFinished.value = true
     }
 }

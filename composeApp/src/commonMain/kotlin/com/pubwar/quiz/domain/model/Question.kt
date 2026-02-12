@@ -7,4 +7,5 @@ data class Question(
     val question: String,
     val answers: ArrayList<Answer>,
     val end: Int,
+    val topic: String? = ""
 )

@@ -1,7 +1,10 @@
 package com.pubwar.quiz.ui.screens.quiz.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.domain.model.ViewType
 import com.pubwar.quiz.ui.screens.quiz.games.Asocijacije
@@ -25,6 +28,7 @@ import com.pubwar.quiz.ui.view_models.SpojniceViewModel
 import com.pubwar.quiz.ui.view_models.TypeAnswerViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.compose.getKoin
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -38,6 +42,17 @@ fun GameContent(viewType: ViewType, game: Game?, games: List<Game>, finishGame: 
     }
 
     println("GameContents $viewType")
+
+    // Create a unique ViewModelStore for each game
+    val viewModelStore = remember(game) { ViewModelStore() }
+    // Create a custom ViewModelStoreOwner
+    val customViewModelStoreOwner = remember(viewModelStore) {
+        object : ViewModelStoreOwner {
+            override val viewModelStore: ViewModelStore
+                get() = viewModelStore
+        }
+    }
+
     when (viewType) {
         ViewType.UVOD -> NonGameView()
         ViewType.REKLAME -> NonGameView()
@@ -47,10 +62,10 @@ fun GameContent(viewType: ViewType, game: Game?, games: List<Game>, finishGame: 
         ViewType.KORAK_PO_KORAK -> KorakPoKorak(KorakPoKorakViewModel(game)) { userFinishTheGame() }
         ViewType.SKOCKO -> Skocko(SkockoViewModel(game)) { userFinishTheGame() }
         ViewType.SPOJNICE -> Spojnice(SpojniceViewModel(game)){ userFinishTheGame() }
-        ViewType.KO_ZNA_ZNA -> KoZnaZna(KoZnaZnaViewModel(game)){ userFinishTheGame() }
+        ViewType.KO_ZNA_ZNA -> KoZnaZna(game, customViewModelStoreOwner){  userFinishTheGame() }
         ViewType.ASOCIJACIJE -> Asocijacije(AsocijacijeViewModel(game))
-        ViewType.TYPE_ANSWER -> TypeAnswer(TypeAnswerViewModel(game)){userFinishTheGame()}
-        ViewType.ORDER_ANSWERS -> OrderAnswers(OrderAnswersViewModel(game)){userFinishTheGame()}
+        ViewType.TYPE_ANSWER -> TypeAnswer(game, customViewModelStoreOwner){userFinishTheGame()}
+        ViewType.ORDER_ANSWERS -> OrderAnswers(game, customViewModelStoreOwner){userFinishTheGame()}
         ViewType.KRAJ -> ResultView(games)
     }
 }

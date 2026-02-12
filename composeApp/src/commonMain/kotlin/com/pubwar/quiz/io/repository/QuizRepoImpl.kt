@@ -21,7 +21,6 @@ class QuizRepoImpl(
              {
                  return Result.Success(localQuiz.decrypt<QuizConfResponseDto>().games)
              }
-        println("da li ovde ima neki zaostali kviz: " + localQuiz.toString())
 
         return remoteDataSource
             .getQuizConfiguration(quizId)
@@ -42,12 +41,11 @@ class QuizRepoImpl(
         points: Int,
         answerInSecond: Int
     ): Result<String, DataError.Remote> {
+        println("send result: $points in $answerInSecond seconds")
         localDataSource.getAccessToken()?.let {
-            remoteDataSource.sendResult(it, localDataSource.getCurrentQuizId(), gameId, points, 10)
+            remoteDataSource.sendResult(it, localDataSource.getCurrentQuizId(), gameId, points, answerInSecond)
 
         }
         return Result.Success("Result sent")
     }
-
-
 }

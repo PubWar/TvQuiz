@@ -5,14 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.pubwar.quiz.domain.model.Answer
 import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.domain.model.Question
+import com.pubwar.quiz.domain.repos.QuizRepository
 import com.pubwar.quiz.getCurrentTime
+import com.pubwar.quiz.utills.addPointsBaseOnTime
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class TypeAnswerViewModel(game: Game?) : ViewModel() {
+class TypeAnswerViewModel(game: Game?, private val quizRepository: QuizRepository) : ViewModel() {
 
     private var timerJob: Job? = null
 
@@ -97,33 +99,48 @@ class TypeAnswerViewModel(game: Game?) : ViewModel() {
         _typedAnswer.value = answer
     }
 
-    fun checkAnswer()
+    private fun calculatePoints() : Int
     {
-        _answerIsSent.value = true
-
         val currentQuestion = questions.elementAtOrNull(_currentIndex.value)
         if(currentQuestion != null)
         {
             _answerIsCorrect.value = _typedAnswer.value.lowercase() == (currentQuestion.answers[0] as Answer.OneAnswer).answer.lowercase()
+            if(_answerIsCorrect.value)
+            {
+                return 10.addPointsBaseOnTime(_game?.start ?: 0, _time.value)
+            }
         }
+
+        return  0
+    }
+
+
+    fun sendResult() = viewModelScope.launch {
+
+        if(!answerIsSent.value)
+        {
+            _answerIsSent.value = true
+            _game?.let { game ->
+                val answerInSecond = _time.value - game.start
+                val points = calculatePoints()
+
+                game.message = "Osvojili ste $points poena"
+                game.points = points
+
+                println("send result to server")
+                quizRepository.sendResult(game.gameId, points, answerInSecond)
+
+                finishGame()
+            }
+        }
+
     }
 
 
     private fun finishGame() {
         isRunning = false
         timerJob?.cancel()
-
-        val points = 0
-//        val points = questions.fastSumBy { question ->
-//            question.answers.firstOrNull { it.selected }?.let { answer ->
-//                if (answer.correct) 10 else -5
-//            } ?: 0
-//        }
-
-        println("Освојили сте $points поена")
-        _game?.message = "Освојили сте $points поена"
-        _game?.points = points
-
+        _game?.message = "Osvojili ste ${_game?.points} poena"
         _gameIsFinished.value = true
     }
 }

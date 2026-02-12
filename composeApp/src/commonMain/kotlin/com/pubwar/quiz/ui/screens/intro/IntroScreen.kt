@@ -33,7 +33,9 @@ import androidx.navigation.NavHostController
 import com.pubwar.quiz.getCurrentTime
 import com.pubwar.quiz.io.locale_data_source.LocalDataSource
 import com.pubwar.quiz.ui.components.ClickableTextWithUrl
+import com.pubwar.quiz.ui.components.GradientButton
 import com.pubwar.quiz.ui.components.RedButton
+import com.pubwar.quiz.ui.theme.AppGradients
 import com.pubwar.quiz.ui.theme.Blue
 import com.pubwar.quiz.ui.view_models.IntroViewModel
 import com.pubwar.quiz.utills.toCyrilic
@@ -48,70 +50,154 @@ import pubwartvquiz.composeapp.generated.resources.intro_subtitle1
 import pubwartvquiz.composeapp.generated.resources.intro_subtitle2
 import pubwartvquiz.composeapp.generated.resources.main_icon
 import pubwartvquiz.composeapp.generated.resources.open_qr_scanner
+import pubwartvquiz.composeapp.generated.resources.pubwar_icon
+
+
+//@Composable
+// fun IntroScreen(viewModel: IntroViewModel, navController: NavHostController)
+//{
+//    val state by viewModel.state.collectAsStateWithLifecycle()
+//
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(30.dp),
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        Spacer(Modifier.weight(3F))
+//        Box(
+//            modifier = Modifier
+//                .background(Color.White, shape = RoundedCornerShape(16.dp))
+//                .padding(16.dp),
+//            contentAlignment = Alignment.Center
+//        ){
+//            Column(
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//
+//                Text(stringResource(Res.string.hello, state.username.toCyrilic()), style =  MaterialTheme.typography.subtitle1.copy(color = Blue, textAlign = TextAlign.Center))
+//                Spacer(Modifier.height(12.dp))
+//                Text(stringResource(Res.string.intro_subtitle1), style = MaterialTheme.typography.body1.copy(color = Blue, textAlign = TextAlign.Center))
+//                Spacer(Modifier.height(12.dp))
+//                Text(stringResource(Res.string.intro_subtitle2), style = MaterialTheme.typography.body1.copy(color = Blue, textAlign = TextAlign.Center))
+//            }
+//        }
+//
+//        Spacer(Modifier.height(12.dp))
+//        Image(
+//            painter = painterResource(Res.drawable.main_icon),
+//            contentDescription = "skocko",
+//            modifier = Modifier
+//                .width(179.dp)
+//                .height(196.dp)
+//        )
+//
+//        Spacer(Modifier.weight(2F))
+//
+//
+//        RedButton(
+//            enabled = true,
+//            text = if (state.activeQuiz) "Nastavi kviz" else stringResource(Res.string.open_qr_scanner),
+//            onClick = {
+//                if(state.activeQuiz)
+//                {
+//                    val exp = (getCurrentTime() - state.activeQuizStarted) + state.activeQuizExpired
+//                    println("check time: ${getCurrentTime() - state.activeQuizStarted}")
+//                    println("check time: ${(getCurrentTime() - state.activeQuizStarted)/1000}")
+//                    println("check time: $exp")
+//                     navController.navigate("/quiz/${exp}")
+//                }
+//                else
+//                {
+//                    navController.navigate("/qrscanner")
+//                }
+//            },
+//        )
+//
+//        Spacer(Modifier.weight(1F))
+//        ClickableTextWithUrl(stringResource(Res.string.intro_info),"www.rts.rs/slagalica", "https://www.rts.rs/lat/tv/rts1/2131252/slagalica.html")
+//    }
+//}
 
 
 @Composable
- fun IntroScreen(viewModel: IntroViewModel, navController: NavHostController)
-{
+fun IntroScreen(viewModel: IntroViewModel, navController: NavHostController) {
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(30.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.weight(3F))
+            .padding(12.dp),
+
+        ) {
+        Image(
+            painter = painterResource(Res.drawable.main_icon),
+            contentDescription = "main_icon",
+            modifier = Modifier
+                .width(200.dp)
+                .height(149.dp)
+                .align(Alignment.TopCenter)
+        )
+
         Box(
             modifier = Modifier
-                .background(Color.White, shape = RoundedCornerShape(16.dp))
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ){
+                .padding(24.dp)
+                .align(Alignment.Center),
+            contentAlignment = Alignment.Center,
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Text(stringResource(Res.string.hello, state.username.toCyrilic()), style =  MaterialTheme.typography.subtitle1.copy(color = Blue, textAlign = TextAlign.Center))
-                Spacer(Modifier.height(12.dp))
-                Text(stringResource(Res.string.intro_subtitle1), style = MaterialTheme.typography.body1.copy(color = Blue, textAlign = TextAlign.Center))
-                Spacer(Modifier.height(12.dp))
-                Text(stringResource(Res.string.intro_subtitle2), style = MaterialTheme.typography.body1.copy(color = Blue, textAlign = TextAlign.Center))
+                Text(
+                    stringResource(Res.string.hello, state.username),
+                    style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
+                )
+                Spacer(Modifier.height(14.dp))
+                Text(
+                    stringResource(Res.string.intro_subtitle1),
+                    style = MaterialTheme.typography.body1.copy(textAlign = TextAlign.Center)
+                )
+                Spacer(Modifier.height(23.dp))
+                Image(
+                    painter = painterResource(Res.drawable.pubwar_icon),
+                    contentDescription = "main_icon",
+                    modifier = Modifier
+                        .width(305.dp)
+                        .height(69.dp)
+                )
+
+                Spacer(Modifier.height(33.dp))
+                Text(
+                    stringResource(Res.string.intro_subtitle2),
+                    style = MaterialTheme.typography.body1.copy(textAlign = TextAlign.Center)
+                )
             }
         }
 
-        Spacer(Modifier.height(12.dp))
-        Image(
-            painter = painterResource(Res.drawable.main_icon),
-            contentDescription = "skocko",
+        Box(
             modifier = Modifier
-                .width(179.dp)
-                .height(196.dp)
+                .align(Alignment.BottomCenter),
         )
+        {
+            GradientButton(
+                text = if (state.activeQuiz) "Nastavi kviz" else stringResource(Res.string.open_qr_scanner),
+                gradient = AppGradients.lightBlueGradient,
+                onClick = {
+                    if (state.activeQuiz) {
+                        val exp = (getCurrentTime() - state.activeQuizStarted) + state.activeQuizExpired
+                        println("continue quiz clicked")
+                        navController.navigate("/quiz/${exp}"){
+                            launchSingleTop = true
+                        }
 
-        Spacer(Modifier.weight(2F))
+                    } else {
+                        navController.navigate("/qrscanner")
+                    }
+                },
+            )
+        }
 
-
-        RedButton(
-            enabled = true,
-            text = if (state.activeQuiz) "Nastavi kviz" else stringResource(Res.string.open_qr_scanner),
-            onClick = {
-                if(state.activeQuiz)
-                {
-                    val exp = (getCurrentTime() - state.activeQuizStarted) + state.activeQuizExpired
-                    println("check time: ${getCurrentTime() - state.activeQuizStarted}")
-                    println("check time: ${(getCurrentTime() - state.activeQuizStarted)/1000}")
-                    println("check time: $exp")
-                     navController.navigate("/quiz/${exp}")
-                }
-                else
-                {
-                    navController.navigate("/qrscanner")
-                }
-            },
-        )
-
-        Spacer(Modifier.weight(1F))
-        ClickableTextWithUrl(stringResource(Res.string.intro_info),"www.rts.rs/slagalica", "https://www.rts.rs/lat/tv/rts1/2131252/slagalica.html")
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,20 +32,32 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pubwar.quiz.domain.model.Game
+import com.pubwar.quiz.ui.components.GradientButton
 import com.pubwar.quiz.ui.theme.AppGradients
 import com.pubwar.quiz.ui.theme.LightBLue
 import com.pubwar.quiz.ui.theme.TextColor
 import com.pubwar.quiz.ui.theme.Yellow
+import com.pubwar.quiz.ui.view_models.OrderAnswersViewModel
 import com.pubwar.quiz.ui.view_models.TypeAnswerViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.core.parameter.parametersOf
 import pubwartvquiz.composeapp.generated.resources.Res
 import pubwartvquiz.composeapp.generated.resources.*
 
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Unit) {
-
+fun TypeAnswer(game: Game?, customViewModelStoreOwner: ViewModelStoreOwner, userFinished: () -> Unit) {
+    val typeAnswerViewModel: TypeAnswerViewModel = koinViewModel(
+        viewModelStoreOwner = customViewModelStoreOwner,
+        parameters = { parametersOf(game) }
+    )
     val currentIndex by typeAnswerViewModel.currentIndex.collectAsStateWithLifecycle()
     val typedAnswer by typeAnswerViewModel.typedAnswer.collectAsStateWithLifecycle()
     val gameIsFinished by typeAnswerViewModel.gameIsFinished.collectAsStateWithLifecycle()
@@ -60,7 +73,8 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .imePadding(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -68,23 +82,20 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Oblast",
-                style = MaterialTheme.typography.caption.copy(
-                    textAlign = TextAlign.Center,
-                    color = Yellow
+            typeAnswerViewModel.questions[currentIndex].topic?.let {
+                Text(
+                    text = stringResource(Res.string.question_area),
+                    style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = Yellow)
                 )
-            )
-            Text(
-                text = "OPŠTA KULTURA",
-                style = MaterialTheme.typography.subtitle2.copy(
-                    textAlign = TextAlign.Center,
-                    color = Yellow
+
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.subtitle2.copy(textAlign = TextAlign.Center, color = Yellow)
                 )
-            )
+            }
             Spacer(Modifier.height(42.dp))
             Text(
-                text = "Preostalo vreme",
+                text = stringResource(Res.string.remaining_time),
                 style = MaterialTheme.typography.caption.copy(
                     textAlign = TextAlign.Center,
                     color = LightBLue
@@ -100,7 +111,7 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
 
             Text(
                 text = typeAnswerViewModel.questions[currentIndex].question,
-                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
+                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center, color = Color.White)
             )
         }
 
@@ -140,16 +151,16 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
                     textAlign = TextAlign.Center
                 ),
 
-                modifier = Modifier
-                    .onPreviewKeyEvent {
-                        if (it.key == Key.Enter) {
-                            //do action
-                            typeAnswerViewModel.checkAnswer()
-                            true
-                        } else {
-                            false
-                        }
-                    },
+//                modifier = Modifier
+//                    .onPreviewKeyEvent {
+//                        if (it.key == Key.Enter) {
+//                            //do action
+////                            typeAnswerViewModel.checkAnswer()
+//                            true
+//                        } else {
+//                            false
+//                        }
+//                    },
                 value = typedAnswer,
                 enabled = !answerIsSent,
                 maxLines = 1,
@@ -157,9 +168,9 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
                 onValueChange = {
                     typeAnswerViewModel.setAnswer(it)
                 },
-                keyboardActions = KeyboardActions(onDone = {
-                    typeAnswerViewModel.checkAnswer()
-                }),
+//                keyboardActions = KeyboardActions(onDone = {
+//                    typeAnswerViewModel.checkAnswer()
+//                }),
 
                 placeholder = {
                     Text("Unesi odgovor", style = MaterialTheme.typography.subtitle2.copy(color = Color(0xFFD3D3D4), textAlign = TextAlign.Center)
@@ -174,6 +185,17 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
                 ),
             )
         }
+
+
+        Spacer(Modifier.height(12.dp))
+        GradientButton(
+            text = "Posalji odgovor",
+            textColor = TextColor,
+            gradient = AppGradients.yellowGradient,
+            onClick = {
+                typeAnswerViewModel.sendResult()
+            },
+        )
 
         AnimatedVisibility(
             visible = answerIsSent
@@ -197,12 +219,6 @@ fun TypeAnswer(typeAnswerViewModel: TypeAnswerViewModel, userFinished: () -> Uni
                    style = MaterialTheme.typography.subtitle1.copy(color = Yellow)
                )
            }
-
-
-
-
-
-
 
         }
 

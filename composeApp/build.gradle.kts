@@ -130,6 +130,7 @@ kotlin {
 buildkonfig {
     packageName = "com.pubwar.quiz"
     defaultConfigs {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
         buildConfigField(FieldSpec.Type.STRING, "PACKAGE", packageName)
         buildConfigField(
             FieldSpec.Type.STRING,
@@ -156,12 +157,12 @@ android {
 
 
     defaultConfig {
-        applicationId = "com.pubwar.quiz"
+        applicationId = "com.pubwar.quiz.four.x.four"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-        manifestPlaceholders["app_name"] = "Slagalica"
+        manifestPlaceholders["app_name"] = "Pub Quiz 4x4"
     }
 
     packaging {
@@ -184,6 +185,8 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
         implementation(libs.compose.ui.tooling.preview)
+        implementation("com.google.firebase:firebase-appcheck")
+        implementation("com.google.firebase:firebase-appcheck-debug")
 
     }
 }

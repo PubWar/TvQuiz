@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.pubwar.quiz.core.Timer
 import com.pubwar.quiz.core.domain.onError
 import com.pubwar.quiz.core.domain.onSuccess
-import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.domain.model.ViewType
 import com.pubwar.quiz.domain.repos.QuizRepository
 import com.pubwar.quiz.getCurrentTime
@@ -14,10 +13,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) : ViewModel() {
+class QuizViewModel(
+    private val quizId: String,
+    expired: Long,
+    private val quizRepository: QuizRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(QuizState(expired))
     val state = _state
@@ -40,36 +44,37 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
         println("time: $_time")
     }
 
-    private val quizId = "86f56545-a1e7-40fe-b9c5-3113ea73e03f"
+//    private val quizId = "86f56545-a1e7-40fe-b9c5-3113ea73e03f" //this should get from qr code
 
     init {
+        println("init quizview model")
         timer.start(expired)
         getQuizConfiguration(expired)
 
     }
 
     private fun getQuizConfiguration(expired: Long) = viewModelScope.launch {
-            // Your coroutine code here
-            quizRepository.setCurrentQuiz(quizId, getCurrentTime(), expired)
-            quizRepository
-                .getQuiz(quizId)
-                .onSuccess { response ->
-                    _state.update {
-                        it.copy(
-                            games = response
-                        )
-                    }
+        // Your coroutine code here
+        quizRepository.setCurrentQuiz(quizId, getCurrentTime(), expired)
+        quizRepository
+            .getQuiz(quizId)
+            .onSuccess { response ->
+                _state.update {
+                    it.copy(
+                        games = response
+                    )
+                }
 
-                    state.value.games.filter { it.end <= state.value.expiredInSeconds }
-                        .forEach { game ->
-                            game.started = true
-                            _state.update { it.copy(gameIndex = it.gameIndex + 1) }
-                        }
-                    setGame()
-                }
-                .onError {
-                    println(it.name)
-                }
+                state.value.games.filter { it.end <= state.value.expiredInSeconds }
+                    .forEach { game ->
+                        game.started = true
+                        _state.update { it.copy(gameIndex = it.gameIndex + 1) }
+                    }
+                setGame()
+            }
+            .onError {
+                println(it.name)
+            }
     }
 
     private fun changeViewType(viewType: ViewType) {
@@ -109,26 +114,29 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
         if (state.value.currentGame?.started == false)
             return
 
-        val previousState = _state.getAndUpdate { state ->
+        _state.update { state ->
             val newIndex = state.gameIndex + 1
+
             state.copy(
+                pointsOfTheLastGame = state.currentGame?.points ?: 0,
+                pauseMessage = state.currentGame?.message ?: "",
                 gameIndex = state.gameIndex + 1,
                 currentGame = state.games.getOrNull(newIndex),
-                totalPoints = state.games.sumOf { it.points }
-            )
-        }
+                totalPoints = state.games.sumOf { it.points },
 
-        if (previousState.currentGame != null) {
-
-            sendResult(previousState.currentGame)
-
-            _state.update {
-                it.copy(
-                    pointsOfTheLastGame = previousState.currentGame.points,
-                    pauseMessage = previousState.currentGame.message
                 )
-            }
         }
+
+
+//        if (previousState.currentGame != null) {
+////            sendResult(previousState.currentGame)
+//            _state.update {
+//                it.copy(
+//                    pointsOfTheLastGame = previousState.currentGame.points,
+//                    pauseMessage = previousState.currentGame.message
+//                )
+//            }
+//        }
 
         if (state.value.gameIndex > 1) {
             val random = Random.Default
@@ -140,7 +148,7 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
             val start = currentGame.start + state.value.delay
             val end = currentGame.end + state.value.delay
 
-            _gameTime.value = end - listOf(_time, start).max()  + 1
+            _gameTime.value = end - listOf(_time, start).max() + 1
             _timeToNextGame.value = start - _time
         } ?: run {
             _gameTime.value = 0
@@ -148,9 +156,9 @@ class QuizViewModel(expired: Long, private val quizRepository: QuizRepository) :
     }
 
 
-    private fun sendResult(lastGame: Game) = viewModelScope.launch {
-        quizRepository.sendResult(lastGame.gameId, lastGame.points, 10)
-    }
+//    private fun sendResult(lastGame: Game) = viewModelScope.launch {
+//        quizRepository.sendResult(lastGame.gameId, lastGame.points, lastGame.answerInSecond)
+//    }
 
     fun gamerFinishTheGame() {
         changeViewType(ViewType.REKLAME)
