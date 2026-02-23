@@ -140,7 +140,7 @@ buildkonfig {
         buildConfigField(
             FieldSpec.Type.STRING,
             "BASE_URL",
-            "https://pwapi2-d2ajagdefwcncwc5.westeurope-01.azurewebsites.net"
+            "https://pw4x4api.azurewebsites.net"
         )
         buildConfigField(FieldSpec.Type.STRING, "FLAVOR", "default")
     }
@@ -156,7 +156,7 @@ android {
 
 
     defaultConfig {
-        applicationId = "com.pubwar.quiz"
+        applicationId = "com.pubwar.quiz.four.x.four"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
