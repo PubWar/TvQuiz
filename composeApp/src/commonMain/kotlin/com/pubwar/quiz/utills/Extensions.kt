@@ -1,7 +1,6 @@
 package com.pubwar.quiz.utills
 
 
-
 import com.pubwar.quiz.BuildKonfig.HEX_IV
 import com.pubwar.quiz.BuildKonfig.HEX_KEY
 import dev.whyoleg.cryptography.CryptographyAlgorithm
@@ -12,6 +11,7 @@ import dev.whyoleg.cryptography.algorithms.symmetric.AES
 import kotlinx.serialization.json.Json
 import okio.ByteString.Companion.decodeBase64
 import okio.ByteString.Companion.decodeHex
+import kotlin.math.abs
 
 fun String.toCyrilic(): String {
     val latinToCyrillicMap = mapOf(
@@ -83,8 +83,8 @@ fun String.toByteArray(): ByteArray {
 }
 
 @OptIn(DelicateCryptographyApi::class, ExperimentalStdlibApi::class)
-suspend fun String.encrypt(): String
-{
+suspend fun String.encrypt(): String {
+    println(this)
     // Initialize Cryptography
     val cryptography = CryptographyProvider.Default
 
@@ -100,7 +100,8 @@ suspend fun String.encrypt(): String
     val paddedPlaintext = addPadding(plaintext, 16)
 
     // Encrypt
-    val ciphertext: ByteArray = cipher.encrypt(iv = HEX_IV.toByteArray(), plaintextInput = plaintext)
+    val ciphertext: ByteArray =
+        cipher.encrypt(iv = HEX_IV.toByteArray(), plaintextInput = plaintext)
 
 
     return ciphertext.toHexString(HexFormat.UpperCase)
@@ -108,7 +109,7 @@ suspend fun String.encrypt(): String
 
 
 @OptIn(DelicateCryptographyApi::class)
-suspend fun String.decryptString() : String{
+suspend fun String.decryptString(): String {
     val ciphertext = this.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
 //    val ciphertext = this.toByteArray()
     // Initialize Cryptography
@@ -128,7 +129,7 @@ suspend fun String.decryptString() : String{
 }
 
 
-suspend inline fun <reified T> String.decrypt() : T {
+suspend inline fun <reified T> String.decrypt(): T {
     val jsonString = this.dropLast(1).drop(1).decryptString().replace("\n", "")
     val cleanedJson = jsonString.trimStart('\uFEFF')
     return Json.decodeFromString<T>(cleanedJson)
@@ -139,7 +140,21 @@ fun addPadding(data: ByteArray, blockSize: Int): ByteArray {
     return data + ByteArray(paddingSize) { paddingSize.toByte() }
 }
 
-fun String.phoneFormat() : String
-{
+fun String.phoneFormat(): String {
     return this.replace("+", "")
+}
+
+fun Int.addPointsBaseOnTime(quizTime: Int, gameStart: Int): Int {
+    val timeElapsed = abs(quizTime - gameStart)
+    println("time points: $timeElapsed")
+
+    return when {
+        timeElapsed <= 5 -> this + 3
+        timeElapsed <= 10 -> this + 2
+        timeElapsed <= 15 -> this + 1
+        else -> this // Optional: handle cases beyond 15
+    }
+//        Odgovor u prvih 5 sekundi: +3 poena
+//        Odgovor između 6. i 10. sekunde: +2 poena
+//        Odgovor između 11. i 15. sekunde: +1 poen
 }

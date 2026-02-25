@@ -32,4 +32,7 @@
     <string name="congrats">Браво, %1$s!</string>
     <string name="congrats_info">Такмичила си се са %1$s такмичара и освојила %2$d. место!\nПогледај своје резултате у табели испод</string>
 
+    <string name="remaining_time">Preostalo vreme</string>
+    <string name="question_area">OBLAST</string>
+
 </resources>

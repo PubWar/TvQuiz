@@ -19,11 +19,12 @@ class LoginRepoImpl(
     private val fcmToken: FCMToken
 ) : LoginRepository {
 
-    override suspend fun login(phoneNumber: String): Result<String, DataError.Remote> {
+    override suspend fun login(phoneNumber: String): Result<User, DataError.Remote> {
 //        localDataSource.saveUsername(username)
         return remoteDataSource
             .login(phoneNumber).map {
-                localDataSource.saveAccessToken(it)
+                it.id?.let { it1 -> localDataSource.saveAccessToken(it1) }
+                localDataSource.saveUsername(it.firstName)
                 it
             }
     }
@@ -32,10 +33,13 @@ class LoginRepoImpl(
         firstname: String,
         lastname: String,
         phoneNumber: String,
+        email: String,
+        city: String,
+        age: Int,
     ): Result<String, DataError.Remote> {
 
 
-        return remoteDataSource.register(firstname, lastname, phoneNumber).map {
+        return remoteDataSource.register(firstname, lastname, phoneNumber, email, city, age).map {
             localDataSource.saveAccessToken(it)
             localDataSource.saveUsername(firstname)
             it

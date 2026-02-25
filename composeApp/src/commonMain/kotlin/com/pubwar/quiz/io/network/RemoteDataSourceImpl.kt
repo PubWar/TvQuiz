@@ -26,30 +26,19 @@ class RemoteDataSourceImpl(
 ) : RemoteDataSource {
 
     override suspend fun getQuizConfiguration(quizId: String): Result<String, DataError.Remote> {
-        println("_______________1")
         val response = httpClient.post(
-            urlString = "$BASE_URL/api/Configuration/get_configuration-json"
-        )
-        println("_______________2")
-//       val jsonString = response.body<String>().dropLast(1).drop(1).decryptString().replace("\n", "")
-//        val res = HttpResponse(jsonString)
-        // Create a Gson instance
-//        val cleanedJson = jsonString.trimStart('\uFEFF')
-        println("_______________3")
-//        val quiz =  Json.decodeFromString<QuizConfResponseDto>(cleanedJson)
-
+            urlString = "$BASE_URL/api/Configuration/get_configuration-quiz/"
+        ){
+            parameter("quizId", quizId)
+        }
         return Result.Success(response.body<String>())
-
-//        return safeCall<QuizConfResponseDto> {
-//          response.body()
-//        }
     }
 
     override suspend fun login(
         phoneNumber: String,
-    ): Result<String, DataError.Remote> {
+    ): Result<User, DataError.Remote> {
 
-        return safeCall<String> {
+        return safeCall<User> {
             httpClient.post(
                 urlString = "$BASE_URL/api/Auth/login_user",
             ) {
@@ -62,18 +51,19 @@ class RemoteDataSourceImpl(
         firstname: String,
         lastname: String,
         phoneNumber: String,
+        email: String,
+        city: String,
+        age: Int,
     ): Result<String, DataError.Remote> {
 
         val user = User(
-            firstname,
-            lastname,
-            phoneNumber.phoneFormat()
+            firstName = firstname,
+            lastName = lastname,
+            email = email,
+            city = city,
+            age = age,
+            phoneNumber = phoneNumber.phoneFormat()
         )
-//        val params = "{" +
-//                "\"firstName\": \"${firstname}\"," +
-//                "\"lastName\": \"${lastname}\"," +
-//                "\"phoneNumber\": \"381631322248\"" +
-//                "}"
 
         return safeCall<String> {
             httpClient.post(

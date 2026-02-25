@@ -19,17 +19,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pubwar.quiz.domain.model.Answer
+import com.pubwar.quiz.domain.model.Game
 import com.pubwar.quiz.ui.components.GradientButton
 import com.pubwar.quiz.ui.theme.AppGradients
 import com.pubwar.quiz.ui.theme.LightBLue
 import com.pubwar.quiz.ui.theme.TextColor
 import com.pubwar.quiz.ui.theme.Yellow
+import com.pubwar.quiz.ui.view_models.KoZnaZnaViewModel
 import com.pubwar.quiz.ui.view_models.OrderAnswersViewModel
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.core.parameter.parametersOf
+import pubwartvquiz.composeapp.generated.resources.Res
+import pubwartvquiz.composeapp.generated.resources.question_area
+import pubwartvquiz.composeapp.generated.resources.remaining_time
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun OrderAnswers(orderAnswersViewModel: OrderAnswersViewModel, userFinished: () -> Unit) {
+fun OrderAnswers(game: Game?, customViewModelStoreOwner: ViewModelStoreOwner, userFinished: () -> Unit) {
+
+    val orderAnswersViewModel: OrderAnswersViewModel = koinViewModel(
+        viewModelStoreOwner = customViewModelStoreOwner,
+        parameters = { parametersOf(game) }
+    )
 
     val currentIndex by orderAnswersViewModel.currentIndex.collectAsStateWithLifecycle()
     val answerSelected by orderAnswersViewModel.answerSelected.collectAsStateWithLifecycle()
@@ -56,17 +72,21 @@ fun OrderAnswers(orderAnswersViewModel: OrderAnswersViewModel, userFinished: () 
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Oblast",
-                style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = Yellow)
-            )
-            Text(
-                text = "OPŠTA KULTURA",
-                style = MaterialTheme.typography.subtitle2.copy(textAlign = TextAlign.Center, color = Yellow)
-            )
+
+            orderAnswersViewModel.questions[currentIndex].topic?.let {
+                Text(
+                    text = stringResource(Res.string.question_area),
+                    style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = Yellow)
+                )
+
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.subtitle2.copy(textAlign = TextAlign.Center, color = Yellow)
+                )
+            }
             Spacer(Modifier.height(42.dp))
             Text(
-                text = "Preostalo vreme",
+                text = stringResource(Res.string.remaining_time),
                 style = MaterialTheme.typography.caption.copy(textAlign = TextAlign.Center, color = LightBLue)
             )
             Text(
@@ -79,7 +99,7 @@ fun OrderAnswers(orderAnswersViewModel: OrderAnswersViewModel, userFinished: () 
 
             Text(
                 text = orderAnswersViewModel.questions[currentIndex].question,
-                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
+                style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center, color = Color.White)
             )
         }
 
@@ -109,5 +129,15 @@ fun OrderAnswers(orderAnswersViewModel: OrderAnswersViewModel, userFinished: () 
                 Spacer(Modifier.height(6.dp))
             }
         }
+
+        Spacer(Modifier.height(12.dp))
+        GradientButton(
+            text = "Posalji odgovor",
+            textColor = TextColor,
+            gradient = AppGradients.yellowGradient,
+            onClick = {
+                orderAnswersViewModel.sendResult()
+            },
+        )
     }
 }

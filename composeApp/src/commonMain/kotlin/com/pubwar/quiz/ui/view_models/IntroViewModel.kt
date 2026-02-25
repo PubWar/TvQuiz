@@ -34,6 +34,7 @@ class IntroViewModel(
                     _state.update {
                         it.copy(
                             activeQuiz = true,
+                            activeQuizID = quizId,
                             activeQuizExpired = expired[0].toInt(),
                             activeQuizStarted = expired[1]
                         )

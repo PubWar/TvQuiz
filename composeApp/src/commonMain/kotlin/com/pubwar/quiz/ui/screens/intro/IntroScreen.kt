@@ -94,15 +94,15 @@ import pubwartvquiz.composeapp.generated.resources.open_qr_scanner
 
         RedButton(
             enabled = true,
-            text = if (state.activeQuiz) "Nastavi kviz" else stringResource(Res.string.open_qr_scanner),
+            text = if (state.activeQuiz && state.activeQuizID != "") "Nastavi kviz" else stringResource(Res.string.open_qr_scanner),
             onClick = {
-                if(state.activeQuiz)
+                if(state.activeQuiz && state.activeQuizID != "")
                 {
                     val exp = (getCurrentTime() - state.activeQuizStarted) + state.activeQuizExpired
                     println("check time: ${getCurrentTime() - state.activeQuizStarted}")
                     println("check time: ${(getCurrentTime() - state.activeQuizStarted)/1000}")
                     println("check time: $exp")
-                     navController.navigate("/quiz/${exp}")
+                     navController.navigate("/quiz/${state.activeQuizID}/${exp}")
                 }
                 else
                 {

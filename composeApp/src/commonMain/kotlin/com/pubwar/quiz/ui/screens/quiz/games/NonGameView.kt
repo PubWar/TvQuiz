@@ -1,17 +1,25 @@
 package com.pubwar.quiz.ui.screens.quiz.games
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.content.MediaType.Companion.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import com.pubwar.quiz.VideoPlayer
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import pubwartvquiz.composeapp.generated.resources.Res
+import pubwartvquiz.composeapp.generated.resources.jelen_pivo
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -24,13 +32,13 @@ fun NonGameView() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-//        VideoPlayer(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(400.dp),
-////            url = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-//            path = "test"
-//        )
+        VideoPlayer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp),
+//            url = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            path = "test"
+        )
 //        Image(
 //            painter = painterResource(Res.drawable.jelen_pivo),
 //            contentDescription = "reklama",

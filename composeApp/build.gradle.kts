@@ -130,6 +130,7 @@ kotlin {
 buildkonfig {
     packageName = "com.pubwar.quiz"
     defaultConfigs {
+        buildConfigField(FieldSpec.Type.BOOLEAN, "DEBUG", "true")
         buildConfigField(FieldSpec.Type.STRING, "PACKAGE", packageName)
         buildConfigField(
             FieldSpec.Type.STRING,
@@ -184,6 +185,8 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
         implementation(libs.compose.ui.tooling.preview)
+        implementation("com.google.firebase:firebase-appcheck")
+        implementation("com.google.firebase:firebase-appcheck-debug")
 
     }
 }

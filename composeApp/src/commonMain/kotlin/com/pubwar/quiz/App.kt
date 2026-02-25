@@ -6,11 +6,6 @@ import LoginScreen
 import QrScannerView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,7 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
@@ -45,22 +39,23 @@ fun App() {
 
             composable(route = "/login")
             {
-                MyAppTheme {
+                IntroTheme {
                     LoginScreen(viewModel = koinViewModel<LoginViewModel>()){
                         navController.navigate("/intro")
                     }
                 }
             }
 
-            composable(route = "/quiz/{seconds}?") { backStackEntry ->
+            composable(route = "/quiz/{quizId}/{seconds}") { backStackEntry ->
                 MyAppTheme {
                     val seconds: String? = backStackEntry.arguments?.getString("seconds")
+                    val quizId: String? = backStackEntry.arguments?.getString("quizId")
                     if (seconds != null) {
                         val startIn = seconds.filter { it.isDigit() }.toInt()
 
-                        println("start in $startIn seconds")
+                        println("start quiz $quizId in $startIn seconds")
                         Quiz(quizViewModel = koinViewModel<QuizViewModel>(parameters = {
-                            parametersOf(startIn)
+                            parametersOf(quizId, startIn)
                         }))
                     }
                 }
@@ -74,11 +69,16 @@ fun App() {
 //                    }))
 
 //                    Asocijacije()
-                        QrScannerView { it ->
-                            val startIn = it.filter { it.isDigit() }.toInt()
+                        QrScannerView { quizId, startIn ->
+//                            val startIn = it.filter { it.isDigit() }.toInt()
                             GlobalScope.launch(Dispatchers.Main) {
+                                navController.navigate("/quiz/$quizId/${startIn * 1000}"){
+                                    launchSingleTop = true
+                                    popUpTo("/qrscanner") {
+                                        inclusive = true
+                                    }
+                                }
 
-                                navController.navigate("/quiz/${startIn * 1000}")
                             }
                         }
                 }

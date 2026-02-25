@@ -16,6 +16,9 @@ class Timer (
 
     fun start(expired: Long) {
         if (isRunning) return
+
+        println("======start timer=====")
+
         isRunning = true
         startTime = getCurrentTime()
         timerJob = coroutineScope.launch {

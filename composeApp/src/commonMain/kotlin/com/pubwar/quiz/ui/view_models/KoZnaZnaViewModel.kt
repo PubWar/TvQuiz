@@ -91,12 +91,17 @@ class KoZnaZnaViewModel(game: Game?) : ViewModel() {
 
 
     fun setAnswer(answer: Answer.OneAnswer) {
-//        if (!_answerSelected.value) {
-//            answer.selected = true
-//            _answerSelected.value = true
+        if (!_answerSelected.value) {
+            answer.selected = true
+            _answerSelected.value = true
+        }
+//        val currentQuestion = questions.elementAtOrNull(_currentIndex.value)
+//        currentQuestion?.answers?.forEach { it ->
+//            (it as Answer.OneAnswer).selected = false
 //        }
-        answer.selected = _answerSelected.value.not()
-        _answerSelected.value = _answerSelected.value.not()
+
+//        answer.selected = _answerSelected.value.not()
+//        _answerSelected.value = _answerSelected.value.not()
 
     }
 

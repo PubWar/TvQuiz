@@ -14,13 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import qrscanner.CameraLens
 import qrscanner.QrScanner
 
 
 
 @Composable
-fun QrScannerView(onScanned: (String) -> Unit) {
+fun QrScannerView(onScanned: (String, Int) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         // Camera Preview
         QrScanner(
@@ -28,7 +30,8 @@ fun QrScannerView(onScanned: (String) -> Unit) {
             flashlightOn = false,
             cameraLens = CameraLens.Back,
             onCompletion = {
-                onScanned(it)
+//                val response = Json.decodeFromString<QrModel>(it)
+                onScanned("5d5e2ab5-37b4-4997-b5b5-859ec7b388f4_slaga", 912)
             },
             imagePickerHandler = {
                 println("")
@@ -47,6 +50,12 @@ fun QrScannerView(onScanned: (String) -> Unit) {
     }
 
 }
+
+@Serializable
+data class QrModel(
+    val quizId : String,
+    val seconds : Int,
+)
 
 
 @Composable
